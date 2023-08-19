@@ -28,7 +28,7 @@ class AuthController extends Controller
             return $this->respondWithToken($token);
         }
 
-        return response()->json(['error' => 'Unauthorized'], 401);
+        return $this->respondWithFailureMessage();
     }
 
     /**
@@ -73,9 +73,23 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         return response()->json([
-            'access_token' => $token,
+            'success' => true,
+            'data' => [
+                'token' => $token,
+            ],
             'token_type' => 'bearer',
-            'expires_in' => $this->guard()->factory()->getTTL() * 60
+            'error' => null,
+            'errors' => []
+        ]);
+    }
+
+    protected function respondWithFailureMessage()
+    {
+        return response()->json([
+            'success' => false,
+            'data' => [],
+            'error' => "Failed to authenticate user",
+            'errors' => []
         ]);
     }
 
