@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\API\V1;
 
 use Illuminate\Http\Request;
+use App\Traits\ApiResponser;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    use ApiResponser;
+
     /**
      * Get a JWT token via given credentials.
      *
@@ -17,18 +21,22 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email|max:255',
             'password' => 'required|string|max:255',
         ]);
 
+        if($validator->fails()){
+            return $this->generalApiResponse(422, [], null, $validator->messages());
+        }
+
         $credentials = $request->only('email', 'password');
 
         if ($token = $this->guard()->attempt($credentials)) {
-            return $this->respondWithToken($token);
+            return $this->generalApiResponse(200, ['token' => $token]);
         }
 
-        return $this->respondWithFailureMessage();
+        return $this->generalApiResponse(422, [], "Failed to authenticate user", []);
     }
 
     /**
@@ -38,7 +46,7 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json($this->guard()->user());
+        return $this->generalApiResponse(200, [$this->guard()->user()]);
     }
 
     /**
@@ -50,7 +58,7 @@ class AuthController extends Controller
     {
         $this->guard()->user()->delete();
 
-        return response()->json(['message' => 'Successfully deleted']);
+        return $this->generalApiResponse(200);
     }
 
     /**
@@ -62,7 +70,7 @@ class AuthController extends Controller
     {
         $this->guard()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return $this->generalApiResponse(200);
     }
 
     /**
@@ -72,37 +80,7 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken($this->guard()->refresh());
-    }
-
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function respondWithToken($token)
-    {
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'token' => $token,
-            ],
-            'token_type' => 'bearer',
-            'error' => null,
-            'errors' => []
-        ], 200);
-    }
-
-    protected function respondWithFailureMessage()
-    {
-        return response()->json([
-            'success' => false,
-            'data' => [],
-            'error' => "Failed to authenticate user",
-            'errors' => []
-        ], 422);
+        return $this->generalApiResponse(200, ['token' => $this->guard()->refresh()]);
     }
 
     /**
