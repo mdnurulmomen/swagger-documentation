@@ -80,7 +80,7 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             'error' => null,
             'errors' => []
-        ]);
+        ], 200);
     }
 
     protected function respondWithFailureMessage()
@@ -90,7 +90,7 @@ class AuthController extends Controller
             'data' => [],
             'error' => "Failed to authenticate user",
             'errors' => []
-        ]);
+        ], 422);
     }
 
     /**
