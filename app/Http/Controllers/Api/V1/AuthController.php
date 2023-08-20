@@ -42,6 +42,18 @@ class AuthController extends Controller
     }
 
     /**
+     * Get the authenticated User
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delete()
+    {
+        $this->guard()->user()->delete();
+
+        return response()->json(['message' => 'Successfully deleted']);
+    }
+
+    /**
      * Log the user out (Invalidate the token)
      *
      * @return \Illuminate\Http\JsonResponse

@@ -23,11 +23,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('v1/user')->group(function () {
 
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
 
     Route::middleware(['auth:api'])->group(function () {
 
         Route::get('/', [AuthController::class, 'me']);
+        Route::delete('/', [AuthController::class, 'delete']);
 
     });
 
