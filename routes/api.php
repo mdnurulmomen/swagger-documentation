@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\V1\AuthController;
+use App\Http\Controllers\API\V1\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,7 @@ Route::prefix('v1/user')->group(function () {
 
         Route::get('/', [AuthController::class, 'me']);
         Route::delete('/', [AuthController::class, 'delete']);
+        Route::get('/orders', [UserController::class, 'getUserOrders']);
 
     });
 

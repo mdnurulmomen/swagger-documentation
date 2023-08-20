@@ -3,64 +3,54 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\Api\V1\UserOrderCollection;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function getUserOrders(Request $request)
     {
-        //
+        $user = $this->guard()->user();
+
+        $query = Order::where('user_id', $user->id);
+
+        if ($request->sortBy) {
+
+            if ($request->desc) {
+
+                $query->orderByDesc($request->sortBy);
+
+            }
+            else {
+
+                $query->orderBy($request->sortBy);
+
+            }
+
+        }
+
+        elseif ($request->desc) {
+
+            $query->latest();
+
+        }
+
+        return new UserOrderCollection($query->paginate($request->limit ?? 10));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\Guard
      */
-    public function create()
+    public function guard()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show()
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit()
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy()
-    {
-        //
+        return Auth::guard();
     }
 }
