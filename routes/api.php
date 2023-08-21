@@ -32,6 +32,7 @@ Route::prefix('v1/user')->group(function () {
         Route::delete('/', [AuthController::class, 'delete']);
         Route::get('/orders', [UserController::class, 'getUserOrders']);
         Route::put('/edit', [UserController::class, 'editUser']);
+        Route::get('/logout', [AuthController::class, 'logout']);
 
     });
 
