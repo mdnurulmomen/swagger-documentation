@@ -27,13 +27,19 @@ class AuthController extends Controller
         ]);
 
         if($validator->fails()){
+
             return $this->generalApiResponse(422, [], null, $validator->messages());
+
         }
 
         $credentials = $request->only('email', 'password');
 
         if ($token = $this->guard()->attempt($credentials)) {
+
+            $this->updateLastLoginTime($token);
+
             return $this->generalApiResponse(200, ['token' => $token]);
+
         }
 
         return $this->generalApiResponse(422, [], "Failed to authenticate user", []);
@@ -91,5 +97,12 @@ class AuthController extends Controller
     public function guard()
     {
         return Auth::guard();
+    }
+
+    protected function updateLastLoginTime($token)
+    {
+        $this->guard()->user()->update([
+            'last_login_at' => now()
+        ]);
     }
 }
