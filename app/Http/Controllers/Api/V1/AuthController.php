@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -84,9 +86,45 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function refresh()
+    public function resetPassword(Request $request)
     {
-        return $this->generalApiResponse(200, ['token' => $this->guard()->refresh()]);
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|max:255|exists:users,email'
+        ]);
+
+        if($validator->fails()){
+
+            return $this->generalApiResponse(422, [], null, $validator->messages());
+
+        }
+
+        return $this->generalApiResponse(200, ['reset_token' => $this->generateToken($request->email)]);
+    }
+
+    protected function generateToken($email){
+
+        $token = Str::random(80);
+
+        $this->storeToken($token, $email);
+
+        return $token;
+
+    }
+    protected function storeToken($token, $email){
+
+        $this->deleteExistingRecord($email);
+
+        DB::table('password_resets')->insert([
+            'email' => $email,
+            'token' => $token,
+            'created_at' => now()
+        ]);
+
+    }
+
+    protected function deleteExistingRecord($email)
+    {
+        DB::table('password_resets')->where('email', $email)->delete();
     }
 
     /**
