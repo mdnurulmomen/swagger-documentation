@@ -28,10 +28,18 @@ Route::prefix('v1/user')->group(function () {
 
     Route::middleware(['auth:api'])->group(function () {
 
+        Route::middleware(['admin'])->group(function () {
+
+            Route::post('/create', [UserController::class, 'createUser']);
+
+        });
+
         Route::get('/', [AuthController::class, 'me']);
-        Route::delete('/', [AuthController::class, 'delete']);
+
         Route::get('/orders', [UserController::class, 'getUserOrders']);
         Route::put('/edit', [UserController::class, 'editUser']);
+
+        Route::delete('/', [AuthController::class, 'delete']);
         Route::get('/logout', [AuthController::class, 'logout']);
 
     });

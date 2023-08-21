@@ -48,6 +48,28 @@ class UserController extends Controller
         return new UserOrderCollection($query->paginate($request->limit ?? 10));
     }
 
+    public function createUser(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8|max:255|confirmed',
+            'avatar' => 'nullable|string|max:255',
+            'address' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:255',
+            'is_marketing' => 'nullable|boolean'
+        ]);
+
+        if($validator->fails()){
+            return $this->generalApiResponse(422, [], null, $validator->messages());
+        }
+
+        $newUser = User::create($validator->validated());
+
+        return $this->generalApiResponse(200, [$newUser]);
+    }
+
     public function editUser(Request $request)
     {
         $user = $this->guard()->user();
