@@ -48,7 +48,7 @@ class UserController extends Controller
         return new UserOrderCollection($query->paginate($request->limit ?? 10));
     }
 
-    public function createUser(Request $request)
+    public function storeUser(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
@@ -70,7 +70,7 @@ class UserController extends Controller
         return $this->generalApiResponse(200, [$newUser]);
     }
 
-    public function editUser(Request $request)
+    public function updateUser(Request $request)
     {
         $user = $this->guard()->user();
 

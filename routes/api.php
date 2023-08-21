@@ -22,27 +22,32 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 */
 
-Route::prefix('v1/user')->group(function () {
 
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
-    Route::post('/forgot-password', [AuthController::class, 'getResetToken'])->name('forget-password');
-    Route::post('/reset-password-token', [AuthController::class, 'resetPassword'])->name('reset-password');
+Route::name('user.')->group(function () {
 
-    Route::middleware(['auth:api'])->group(function () {
+    Route::prefix('v1/user')->group(function () {
 
-        Route::middleware(['admin'])->group(function () {
+        Route::post('/login', [AuthController::class, 'login'])->name('login');
+        Route::post('/forgot-password', [AuthController::class, 'getResetToken'])->name('reset-token');
+        Route::post('/reset-password-token', [AuthController::class, 'resetPassword'])->name('reset-password');
 
-            Route::post('/create', [UserController::class, 'createUser']);
+        Route::middleware(['auth:api'])->group(function () {
+
+            Route::middleware(['admin'])->group(function () {
+
+                Route::post('/create', [UserController::class, 'storeUser'])->name('store');
+                Route::delete('/', [AuthController::class, 'delete'])->name('delete');
+
+            });
+
+            Route::get('/', [AuthController::class, 'me'])->name('show');
+
+            Route::get('/orders', [UserController::class, 'getUserOrders'])->name('orders.index');
+            Route::put('/edit', [UserController::class, 'updateUser'])->name('users.update');
+
+            Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
         });
-
-        Route::get('/', [AuthController::class, 'me']);
-
-        Route::get('/orders', [UserController::class, 'getUserOrders']);
-        Route::put('/edit', [UserController::class, 'editUser']);
-
-        Route::delete('/', [AuthController::class, 'delete']);
-        Route::get('/logout', [AuthController::class, 'logout']);
 
     });
 
