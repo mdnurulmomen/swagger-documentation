@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Api\V1\CategoryCollection;
 
 class CategoryController extends Controller
@@ -42,6 +43,25 @@ class CategoryController extends Controller
 
         return new CategoryCollection($query->paginate($request->limit ?? 10));
     }
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:255'
+        ]);
+
+        if($validator->fails()){
+            return $this->generalApiResponse(422, [], null, $validator->messages());
+        }
+
+        $inputedDataArray = $validator->validated();
+        $inputedDataArray += ['slug' => str_replace(' ', '-', $request->title)];
+
+        $newCategory = Category::create($inputedDataArray);
+
+        return $this->generalApiResponse(200, ['uuid' => $newCategory->uuid]);
+    }
+
 
     public function show($uuid)
     {

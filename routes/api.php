@@ -22,7 +22,17 @@ use App\Http\Controllers\API\V1\CategoryController;
 Route::prefix('v1')->group(function () {
 
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
-    Route::get('/category/{uuid}', [CategoryController::class, 'show'])->name('categories.show');
+
+    Route::prefix('/category')->group(function () {
+
+        Route::get('/{uuid}', [CategoryController::class, 'show'])->name('categories.show');
+
+        Route::middleware(['admin'])->group(function () {
+
+            Route::post('/create', [CategoryController::class, 'store'])->name('categories.store');
+
+        });
+    });
 
 });
 
