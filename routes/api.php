@@ -26,6 +26,8 @@ Route::name('admin.')->group(function () {
 
             Route::post('/create', [UserController::class, 'store'])->name('store');
 
+            Route::get('/user-listing', [UserController::class, 'getUserList'])->name('users.index');
+
             Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
         });
@@ -55,7 +57,7 @@ Route::name('user.')->group(function () {
             Route::get('/', [AuthController::class, 'me'])->name('show');
 
             Route::get('/orders', [UserController::class, 'getUserOrders'])->name('orders.index');
-            Route::put('/edit', [UserController::class, 'updateUser'])->name('users.update');
+            Route::put('/edit', [UserController::class, 'updateUser'])->name('update');
 
             Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
