@@ -58,18 +58,14 @@ Route::name('admin.')->group(function () {
     Route::prefix('v1/admin')->group(function () {
 
         Route::post('/login', [AuthController::class, 'login'])->name('login');
+        Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+        Route::post('/create', [UserController::class, 'store'])->name('store');
 
         Route::middleware(['auth.jwt', 'admin'])->group(function () {
 
-            Route::post('/create', [UserController::class, 'store'])->name('store');
-
             Route::get('/user-listing', [AdminController::class, 'getUserList'])->name('users.index');
-
             Route::put('/user-edit/{uuid}', [AdminController::class, 'updateUser'])->name('users.update');
-
             Route::delete('/user-delete/{uuid}', [AdminController::class, 'deleteUser'])->name('users.destroy');
-
-            Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
         });
 
@@ -83,6 +79,7 @@ Route::name('user.')->group(function () {
     Route::prefix('v1/user')->group(function () {
 
         Route::post('/login', [AuthController::class, 'login'])->name('login');
+        Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
         Route::post('/forgot-password', [AuthController::class, 'getResetToken'])->name('reset-token');
         Route::post('/reset-password-token', [AuthController::class, 'resetPassword'])->name('reset-password');
 
@@ -96,11 +93,8 @@ Route::name('user.')->group(function () {
             });
 
             Route::get('/', [AuthController::class, 'me'])->name('show');
-
             Route::get('/orders', [UserController::class, 'getUserOrders'])->name('orders.index');
             Route::put('/edit', [UserController::class, 'update'])->name('update');
-
-            Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
         });
 
