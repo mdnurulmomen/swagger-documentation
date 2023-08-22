@@ -62,6 +62,26 @@ class CategoryController extends Controller
         return $this->generalApiResponse(200, ['uuid' => $newCategory->uuid]);
     }
 
+    public function update($uuid, Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:255'
+        ]);
+
+        if($validator->fails()){
+            return $this->generalApiResponse(422, [], null, $validator->messages());
+        }
+
+        $category = Category::where('uuid', $uuid)->firstOrFail();
+
+        $inputedDataArray = $validator->validated();
+        $inputedDataArray += ['slug' => str_replace(' ', '-', $request->title)];
+
+        $category->update($inputedDataArray);
+
+        return $this->generalApiResponse(200, [$category]);
+    }
+
 
     public function show($uuid)
     {
