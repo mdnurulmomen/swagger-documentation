@@ -148,9 +148,33 @@ class UserController extends Controller
         return $this->generalApiResponse(200, [$newUser]);
     }
 
-    public function updateUser(Request $request)
+    public function update(Request $request)
     {
         $user = $this->guard()->user();
+
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,'.$user->id,
+            'password' => 'required|string|min:8|max:255|confirmed',
+            'avatar' => 'nullable|string|max:255',
+            'address' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:255',
+            'is_marketing' => 'nullable|boolean'
+        ]);
+
+        if($validator->fails()){
+            return $this->generalApiResponse(422, [], null, $validator->messages());
+        }
+
+        $user->update($validator->validated());
+
+        return $this->generalApiResponse(200, [$user]);
+    }
+
+    public function updateUser($uuid, Request $request)
+    {
+        $user = User::where('uuid', $uuid)->firstOrFail();
 
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
