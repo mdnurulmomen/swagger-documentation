@@ -89,4 +89,13 @@ class CategoryController extends Controller
 
         return $this->generalApiResponse(200, [$category]);
     }
+
+    public function delete($uuid)
+    {
+        $category = Category::where('uuid', $uuid)->firstOrFail();
+
+        $category->delete();
+
+        return $this->generalApiResponse(200);
+    }
 }
