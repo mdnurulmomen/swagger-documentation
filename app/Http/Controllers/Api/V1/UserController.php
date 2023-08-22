@@ -26,7 +26,7 @@ class UserController extends Controller
 
         if ($request->sortBy) {
 
-            if ($request->desc) {
+            if (filter_var($request->desc, FILTER_VALIDATE_BOOLEAN)) {
 
                 $query->orderByDesc($request->sortBy);
 
@@ -39,7 +39,7 @@ class UserController extends Controller
 
         }
 
-        elseif ($request->desc) {
+        elseif (filter_var($request->desc, FILTER_VALIDATE_BOOLEAN)) {
 
             $query->latest();
 
