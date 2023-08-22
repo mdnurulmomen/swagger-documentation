@@ -28,7 +28,7 @@ Generate a new application key
 
 Generate a new JWT authentication secret key
 
-    php artisan jwt:generate
+    php artisan jwt:secret
 
 Run the database migrations (**Set the database connection in .env before migrating**)
 
@@ -54,14 +54,14 @@ You can now access the server at http://localhost:8000
 To install with [Docker](https://www.docker.com), run following commands:
 
 ```
-git clone git@github.com:gothinkster/laravel-realworld-example-app.git
-cd laravel-realworld-example-app
+git clone https://github.com/mdnurulmomen/PetShop.git
+cd PetShop
 cp .env.example.docker .env
 docker run -v $(pwd):/app composer install
 cd ./docker
 docker-compose up -d
 docker-compose exec php php artisan key:generate
-docker-compose exec php php artisan jwt:generate
+docker-compose exec php php artisan jwt:secret
 docker-compose exec php php artisan migrate
 docker-compose exec php php artisan db:seed
 docker-compose exec php php artisan serve --host=0.0.0.0
