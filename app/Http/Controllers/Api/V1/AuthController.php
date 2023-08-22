@@ -38,6 +38,12 @@ class AuthController extends Controller
 
         $credentials = $request->only('email', 'password');
 
+        if ($request->route()->named('admin.login')) {
+
+            $credentials += ['is_admin' => 1];
+
+        }
+
         if ($token = $this->guard()->attempt($credentials)) {
 
             $this->updateLastLoginTime($token);

@@ -16,11 +16,15 @@ use App\Http\Controllers\API\V1\UserController;
 |
 */
 
-/*
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::name('admin.')->group(function () {
+
+    Route::prefix('v1/admin')->group(function () {
+
+        Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+    });
+
 });
-*/
 
 
 Route::name('user.')->group(function () {
