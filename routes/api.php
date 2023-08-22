@@ -30,6 +30,8 @@ Route::name('admin.')->group(function () {
 
             Route::put('/user-edit/{uuid}', [UserController::class, 'updateUser'])->name('users.update');
 
+            Route::delete('/user-delete/{uuid}', [UserController::class, 'deleteUser'])->name('users.destroy');
+
             Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
         });
@@ -52,7 +54,7 @@ Route::name('user.')->group(function () {
             Route::middleware(['admin'])->group(function () {
 
                 Route::post('/create', [UserController::class, 'store'])->name('store');
-                Route::delete('/', [AuthController::class, 'delete'])->name('delete');
+                Route::delete('/', [AuthController::class, 'delete'])->name('destroy');
 
             });
 

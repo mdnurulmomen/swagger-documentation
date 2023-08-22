@@ -196,6 +196,15 @@ class UserController extends Controller
         return $this->generalApiResponse(200, [$user]);
     }
 
+    public function deleteUser($uuid)
+    {
+        $user = User::where('uuid', $uuid)->firstOrFail();
+
+        $user->delete();
+
+        return $this->generalApiResponse(200);
+    }
+
     /**
      * Get the guard to be used during authentication.
      *
