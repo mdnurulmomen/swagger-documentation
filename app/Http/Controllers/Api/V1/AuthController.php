@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 

@@ -1,11 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\API\V1\AuthController;
 use App\Http\Controllers\Api\V1\PostController;
 use App\Http\Controllers\Api\V1\PromotionController;
 use App\Http\Controllers\API\V1\UserController;
+use App\Http\Controllers\API\V1\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +22,7 @@ use App\Http\Controllers\API\V1\UserController;
 Route::prefix('v1')->group(function () {
 
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/category/{uuid}', [CategoryController::class, 'show'])->name('categories.show');
 
 });
 

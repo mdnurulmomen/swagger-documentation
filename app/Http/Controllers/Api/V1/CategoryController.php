@@ -1,13 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\V1;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Traits\ApiResponser;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\V1\CategoryCollection;
 
 class CategoryController extends Controller
 {
+    use ApiResponser;
+
     /**
      * Display a listing of the resource.
      */
@@ -37,5 +41,12 @@ class CategoryController extends Controller
         }
 
         return new CategoryCollection($query->paginate($request->limit ?? 10));
+    }
+
+    public function show($uuid)
+    {
+        $category = Category::where('uuid', $uuid)->firstOrFail();
+
+        return $this->generalApiResponse(200, [$category]);
     }
 }
