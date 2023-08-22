@@ -48,7 +48,7 @@ class UserController extends Controller
         return new UserOrderCollection($query->paginate($request->limit ?? 10));
     }
 
-    public function storeUser(Request $request)
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
@@ -65,7 +65,16 @@ class UserController extends Controller
             return $this->generalApiResponse(422, [], null, $validator->messages());
         }
 
-        $newUser = User::create($validator->validated());
+        $inputedDataArray = $validator->validated();
+
+
+        if ($this->guard()->user()->is_admin) {
+
+            $inputedDataArray += ['is_admin' => 1];
+
+        }
+
+        $newUser = User::create($inputedDataArray);
 
         return $this->generalApiResponse(200, [$newUser]);
     }

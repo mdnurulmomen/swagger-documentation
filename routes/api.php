@@ -24,6 +24,8 @@ Route::name('admin.')->group(function () {
 
         Route::middleware(['auth.jwt', 'admin'])->group(function () {
 
+            Route::post('/create', [UserController::class, 'store'])->name('store');
+
             Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
         });
@@ -45,7 +47,7 @@ Route::name('user.')->group(function () {
 
             Route::middleware(['admin'])->group(function () {
 
-                Route::post('/create', [UserController::class, 'storeUser'])->name('store');
+                Route::post('/create', [UserController::class, 'store'])->name('store');
                 Route::delete('/', [AuthController::class, 'delete'])->name('delete');
 
             });
