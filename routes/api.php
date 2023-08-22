@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\API\V1\AuthController;
 use App\Http\Controllers\Api\V1\PostController;
 use App\Http\Controllers\Api\V1\PromotionController;
@@ -16,6 +17,15 @@ use App\Http\Controllers\API\V1\UserController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+// Category
+Route::prefix('v1')->group(function () {
+
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+
+});
+
+// Main
 Route::name('main.')->group(function () {
 
     Route::prefix('v1/main')->group(function () {
@@ -28,7 +38,7 @@ Route::name('main.')->group(function () {
 
 });
 
-
+// Admin
 Route::name('admin.')->group(function () {
 
     Route::prefix('v1/admin')->group(function () {
