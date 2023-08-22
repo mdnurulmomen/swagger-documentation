@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Order;
 use Illuminate\Http\Request;
