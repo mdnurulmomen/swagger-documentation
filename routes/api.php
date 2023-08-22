@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\V1\AuthController;
+use App\Http\Controllers\Api\V1\PostController;
 use App\Http\Controllers\Api\V1\PromotionController;
 use App\Http\Controllers\API\V1\UserController;
 
@@ -20,6 +21,7 @@ Route::name('main.')->group(function () {
     Route::prefix('v1/main')->group(function () {
 
         Route::get('/promotions', [PromotionController::class, 'getPromotionList'])->name('promotions.index');
+        Route::get('/blog', [PostController::class, 'index'])->name('blogs.index');
 
     });
 
