@@ -31,7 +31,7 @@ Route::name('user.')->group(function () {
         Route::post('/forgot-password', [AuthController::class, 'getResetToken'])->name('reset-token');
         Route::post('/reset-password-token', [AuthController::class, 'resetPassword'])->name('reset-password');
 
-        Route::middleware(['auth:api'])->group(function () {
+        Route::middleware(['auth.jwt'])->group(function () {
 
             Route::middleware(['admin'])->group(function () {
 
@@ -50,6 +50,18 @@ Route::name('user.')->group(function () {
         });
 
     });
+
+});
+
+Route::fallback(function(){
+
+    return response()->json([
+        'success' => false,
+        'data' => [],
+        'error' => 'No endpoint found',
+        'errors' => [],
+        "extra" => []
+    ], 404);
 
 });
 

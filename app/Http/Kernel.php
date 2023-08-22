@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
 
         // custom
         'admin' => \App\Http\Middleware\UserIsAdmin::class,
+        'auth.jwt'=>\App\Http\Middleware\JwtMiddleWare::class,
     ];
 }
