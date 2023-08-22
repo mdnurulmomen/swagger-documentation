@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\V1\AuthController;
 use App\Http\Controllers\Api\V1\PostController;
@@ -62,11 +63,11 @@ Route::name('admin.')->group(function () {
 
             Route::post('/create', [UserController::class, 'store'])->name('store');
 
-            Route::get('/user-listing', [UserController::class, 'getUserList'])->name('users.index');
+            Route::get('/user-listing', [AdminController::class, 'getUserList'])->name('users.index');
 
-            Route::put('/user-edit/{uuid}', [UserController::class, 'updateUser'])->name('users.update');
+            Route::put('/user-edit/{uuid}', [AdminController::class, 'updateUser'])->name('users.update');
 
-            Route::delete('/user-delete/{uuid}', [UserController::class, 'deleteUser'])->name('users.destroy');
+            Route::delete('/user-delete/{uuid}', [AdminController::class, 'deleteUser'])->name('users.destroy');
 
             Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
