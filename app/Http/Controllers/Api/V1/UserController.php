@@ -51,8 +51,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'first_name' => 'required|string|min:3|max:255',
+            'last_name' => 'required|string|min:3|max:255',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|max:255|confirmed',
             'avatar' => 'nullable|string|max:255',
@@ -84,8 +84,8 @@ class UserController extends Controller
         $user = $this->guard()->user();
 
         $validator = Validator::make($request->all(), [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'first_name' => 'required|string|min:3|max:255',
+            'last_name' => 'required|string|min:3|max:255',
             'email' => 'required|email|max:255|unique:users,email,'.$user->id,
             'password' => 'required|string|min:8|max:255|confirmed',
             'avatar' => 'nullable|string|max:255',
