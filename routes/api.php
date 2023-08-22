@@ -22,6 +22,12 @@ Route::name('admin.')->group(function () {
 
         Route::post('/login', [AuthController::class, 'login'])->name('login');
 
+        Route::middleware(['auth.jwt', 'admin'])->group(function () {
+
+            Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+        });
+
     });
 
 });
