@@ -1,0 +1,178 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "PetShop API Swagger-Documentation",
+        "description": "PetShop API description",
+        "contact": {
+            "email": "mdnurulmomen.bd@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/admin/user-listing": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "List all users",
+                "description": "Admin API endpoints.",
+                "operationId": "getUserList",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page Number of Pagination",
+                        "required": false,
+                        "explode": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Number of elements at per page when paginating",
+                        "required": false,
+                        "explode": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sortBy",
+                        "in": "query",
+                        "description": "Name of the field for sorting",
+                        "required": false,
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "desc",
+                        "in": "query",
+                        "description": "Expected order of data to search users",
+                        "required": false,
+                        "explode": true,
+                        "schema": {
+                            "type": "boolean",
+                            "enum": [
+                                true,
+                                false
+                            ]
+                        }
+                    },
+                    {
+                        "name": "marketing",
+                        "in": "query",
+                        "description": "Expected option to search users",
+                        "required": false,
+                        "explode": true,
+                        "schema": {
+                            "type": "boolean",
+                            "enum": [
+                                true,
+                                false
+                            ]
+                        }
+                    },
+                    {
+                        "name": "first_name",
+                        "in": "query",
+                        "description": "Expected first name to search users",
+                        "required": false,
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "query",
+                        "description": "Expected last name to search users",
+                        "required": false,
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Expected email to search users",
+                        "required": false,
+                        "explode": true,
+                        "schema": {
+                            "type": "email"
+                        }
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Expected phone number to search users",
+                        "required": false,
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "address",
+                        "in": "query",
+                        "description": "Expected address to search users",
+                        "required": false,
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Page not found"
+                    }
+                },
+                "security": [
+                    {
+                        "petshop_auth": [
+                            "write:admin",
+                            "read:admin"
+                        ]
+                    }
+                ]
+            }
+        },
+        "v1/admin/user-edit/{uuid}": {
+            "put": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Update expected user",
+                "description": "Update an existing user.",
+                "operationId": "updateUser",
+                "responses": {
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Record not found"
+                    },
+                    "422": {
+                        "description": "Validation exception"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    }
+}
