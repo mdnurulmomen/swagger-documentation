@@ -92,7 +92,7 @@ Route::name('user.')->group(function () {
             });
 
             Route::get('/', [AuthController::class, 'me'])->name('show');
-            Route::get('/orders', [UserController::class, 'getUserOrders'])->name('orders.index');
+            Route::get('/orders', [UserController::class, 'getMyOrders'])->name('orders.index');
             Route::put('/edit', [UserController::class, 'update'])->name('update');
             Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 

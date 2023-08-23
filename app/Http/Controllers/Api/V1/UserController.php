@@ -18,7 +18,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function getUserOrders(Request $request)
+    public function getMyOrders(Request $request)
     {
         $user = $this->guard()->user();
 
