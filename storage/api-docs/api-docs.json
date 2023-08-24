@@ -398,6 +398,38 @@
                 ]
             }
         },
+        "/api/v1/user/logout": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Logout an User account",
+                "description": "Admin API endpoints.",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Page not found"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    },
+                    "500": {
+                        "description": "Internal Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/user/forgot-password": {
             "post": {
                 "tags": [

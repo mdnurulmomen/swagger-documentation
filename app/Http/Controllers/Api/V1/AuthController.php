@@ -168,9 +168,34 @@ class AuthController extends Controller
     }
 
     /**
-     * Log the user out (Invalidate the token)
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Get(
+     *     path="/api/v1/user/logout",
+     *     tags={"User"},
+     *     summary="Logout an User account",
+     *     operationId="logout",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Page not found"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server error"
+     *     )
+     * )
      */
     public function logout()
     {
