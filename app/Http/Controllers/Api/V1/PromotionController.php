@@ -13,7 +13,7 @@ class PromotionController extends Controller
      *
      * @OA\Get(
      *     path="/api/v1/main/promotions",
-     *     tags={"Main-Page"},
+     *     tags={"Main Page"},
      *     summary="List all promotions",
      *     operationId="getPromotionList",
      *     @OA\Parameter(

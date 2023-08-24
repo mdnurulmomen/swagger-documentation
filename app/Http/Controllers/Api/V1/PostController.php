@@ -13,9 +13,69 @@ class PostController extends Controller
     use ApiResponser;
 
     /**
-     * Display a listing of the resource.
+     * Main Page API endpoints.
+     *
+     * @OA\Get(
+     *     path="/api/v1/main/blog",
+     *     tags={"Main Page"},
+     *     summary="List all posts",
+     *     operationId="getPostList",
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Page Number of Pagination",
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="limit",
+     *         in="query",
+     *         description="Number of elements at per page when paginating",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="sortBy",
+     *         in="query",
+     *         description="Name of the field for sorting",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="desc",
+     *         in="query",
+     *         description="Expected order of data to search users",
+     *         @OA\Schema(
+     *             type="boolean",
+     *             enum={true, false},
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Page not found"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server error"
+     *     )
+     * )
      */
-    public function index(Request $request)
+    public function getPostList(Request $request)
     {
         $query = Post::query();
 
@@ -43,7 +103,46 @@ class PostController extends Controller
         return new PostCollection($query->paginate($request->limit ?? 10));
     }
 
-    public function show($uuid)
+    /**
+     * Main Page API endpoints.
+     *
+     * @OA\Get(
+     *     path="/api/v1/main/blog/{uuid}",
+     *     tags={"Main Page"},
+     *     summary="Fetch a post",
+     *     operationId="getPost",
+     *     @OA\Parameter(
+     *         name="uuid",
+     *         in="query",
+     *         description="uuid of expected post",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Page not found"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server error"
+     *     )
+     * )
+     */
+    public function getPost($uuid)
     {
         $post = Post::where('uuid', $uuid)->firstOrFail();
 

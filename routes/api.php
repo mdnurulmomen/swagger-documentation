@@ -45,8 +45,8 @@ Route::name('main.')->group(function () {
     Route::prefix('v1/main')->group(function () {
 
         Route::get('/promotions', [PromotionController::class, 'getPromotionList'])->name('promotions.index');
-        Route::get('/blog', [PostController::class, 'index'])->name('blogs.index');
-        Route::get('/blog/{uuid}', [PostController::class, 'show'])->name('blogs.show');
+        Route::get('/blog', [PostController::class, 'getPostList'])->name('blogs.index');
+        Route::get('/blog/{uuid}', [PostController::class, 'getPost'])->name('blogs.show');
 
     });
 
