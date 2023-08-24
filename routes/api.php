@@ -32,7 +32,7 @@ Route::prefix('v1')->group(function () {
 
             Route::post('/create', [CategoryController::class, 'storeCategory'])->name('categories.store');
             Route::put('/{uuid}', [CategoryController::class, 'updateCategory'])->name('categories.update');
-            Route::delete('/{uuid}', [CategoryController::class, 'delete'])->name('categories.destroy');
+            Route::delete('/{uuid}', [CategoryController::class, 'deleteCategory'])->name('categories.destroy');
 
         });
     });

@@ -322,7 +322,45 @@ class CategoryController extends Controller
         return $this->generalApiResponse(200, [$category]);
     }
 
-    public function delete($uuid)
+    /**
+     * @OA\Delete(
+     *     path="/api/v1/category/{uuid}",
+     *     tags={"Category"},
+     *     summary="Deletes an existing category",
+     *     operationId="deleteCategory",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="uuid",
+     *         in="path",
+     *         required=true,
+     *         description="uuid of expected user",
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Page not found"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server error"
+     *     )
+     * )
+     */
+    public function deleteCategory($uuid)
     {
         $category = Category::where('uuid', $uuid)->firstOrFail();
 
