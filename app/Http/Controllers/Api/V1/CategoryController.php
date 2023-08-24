@@ -201,7 +201,62 @@ class CategoryController extends Controller
         return $this->generalApiResponse(200, ['uuid' => $newCategory->uuid]);
     }
 
-    public function update($uuid, Request $request)
+    /**
+     * Update an existing category.
+     *
+     * @OA\Put(
+     *     path="/api/v1/category/{uuid}",
+     *     tags={"Category"},
+     *     summary="Update an existing category",
+     *     operationId="updateCategory",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="uuid",
+     *         in="path",
+     *         description="uuid of expected category to update",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Input data properties",
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 required={"title"},
+     *                 @OA\Property(
+     *                     property="title",
+     *                     description="Category Title",
+     *                     type="string"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Page not found"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server error"
+     *     )
+     * )
+     */
+    public function updateCategory($uuid, Request $request)
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255'
