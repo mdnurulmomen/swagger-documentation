@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Post;
 use App\Models\Promotion;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -17,6 +18,18 @@ class MainPageTest extends TestCase
         $categories = Promotion::factory()->count(3)->create();
 
         $response = $this->getJson(route('main.promotions.index'));
+
+        $response->assertJsonCount(3, 'data');
+    }
+
+    /**
+     * A basic feature test example.
+     */
+    public function test_post_list_method_returns_proper_response(): void
+    {
+        $categories = Post::factory()->count(3)->create();
+
+        $response = $this->getJson(route('main.blogs.index'));
 
         $response->assertJsonCount(3, 'data');
     }
