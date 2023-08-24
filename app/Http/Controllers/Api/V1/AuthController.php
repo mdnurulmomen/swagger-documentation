@@ -155,9 +155,47 @@ class AuthController extends Controller
     }
 
     /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Post(
+     *      path="/api/v1/user/forgot-password",
+     *      tags={"User"},
+     *      summary="Creates a token to reset a user password",
+     *      operationId="getResetToken",
+     *      @OA\RequestBody(
+     *         required=true,
+     *         description="Request properties",
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 required={"email"},
+     *                 @OA\Property(
+     *                     property="email",
+     *                     description="User email",
+     *                     type="string"
+     *                 )
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *      ),
+     *      @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *      ),
+     *      @OA\Response(
+     *         response=404,
+     *         description="Page not found"
+     *      ),
+     *      @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity"
+     *      ),
+     *      @OA\Response(
+     *         response=500,
+     *         description="Internal Server error"
+     *      )
+     *  )
      */
     public function getResetToken(Request $request)
     {
