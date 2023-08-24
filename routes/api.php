@@ -57,7 +57,7 @@ Route::name('admin.')->group(function () {
 
     Route::prefix('v1/admin')->group(function () {
 
-        Route::post('/login', [AuthController::class, 'login'])->name('login');
+        Route::post('/login', [AuthController::class, 'adminLogin'])->name('login');
 
         Route::middleware(['auth.jwt', 'admin'])->group(function () {
 

@@ -20,7 +20,7 @@ class AuthController extends Controller
      * @OA\Post(
      *      path="/api/v1/user/login",
      *      tags={"User"},
-     *      summary="Login an User account",
+     *      summary="Login a User account",
      *      operationId="login",
      *      @OA\RequestBody(
      *         required=true,
@@ -359,6 +359,82 @@ class AuthController extends Controller
 
         return $this->generalApiResponse(200, ['message'=> 'Password has been successfully updated']);
 
+    }
+
+    /**
+     * @OA\Post(
+     *      path="/api/v1/admin/login",
+     *      tags={"Admin"},
+     *      summary="Login an admin account",
+     *      operationId="adminLogin",
+     *      @OA\RequestBody(
+     *         required=true,
+     *         description="Request properties",
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 required={"email", "password"},
+     *                 @OA\Property(
+     *                     property="email",
+     *                     description="User email",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password",
+     *                     description="User password",
+     *                     type="string"
+     *                 )
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *      ),
+     *      @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *      ),
+     *      @OA\Response(
+     *         response=404,
+     *         description="Page not found"
+     *      ),
+     *      @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity"
+     *      ),
+     *      @OA\Response(
+     *         response=500,
+     *         description="Internal Server error"
+     *      )
+     *  )
+     */
+    public function adminLogin(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|max:255',
+            'password' => 'required|string|max:255',
+        ]);
+
+        if($validator->fails()){
+
+            return $this->generalApiResponse(422, [], null, $validator->messages());
+
+        }
+
+        $credentials = $request->only('email', 'password');
+
+        $credentials += ['is_admin' => 1];
+
+        if ($token = $this->guard()->attempt($credentials)) {
+
+            $this->updateLastLoginTime($token);
+
+            return $this->generalApiResponse(200, ['token' => $token]);
+
+        }
+
+        return $this->generalApiResponse(422, [], "Failed to authenticate user", []);
     }
 
     protected function generateToken($email){
