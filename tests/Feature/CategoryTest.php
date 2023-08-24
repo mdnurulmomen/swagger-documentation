@@ -101,4 +101,33 @@ class CategoryTest extends TestCase
         ->assertJsonCount(1, 'data')
         ->assertJson(['success' => true]);
     }
+
+    /**
+     * A basic feature test example.
+     */
+    public function test_delete_method_returns_successfull_response(): void
+    {
+        $admin = User::factory()->create([
+            'password' => Hash::make('password'),
+            'is_admin' => 1,
+        ]);
+
+        $token = JWTAuth::attempt(['email'=> $admin->email, 'password'=> 'password', 'is_admin'=> 1]);
+
+        $newCategory = Category::create([
+            'title' => 'Category Title',
+            'slug' => 'Category-Title'
+        ]);
+
+        $categoryUpdatingPayload = [
+            'title' => 'Category Title Updated'
+        ];
+
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer $token",
+        ])->deleteJson(route('categories.destroy', ['uuid' => $newCategory->uuid]));
+
+        $response->assertOk()
+        ->assertJson(['success' => true]);
+    }
 }
