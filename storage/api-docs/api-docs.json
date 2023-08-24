@@ -128,6 +128,91 @@
                 ]
             }
         },
+        "/api/v1/admin/create": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Create an Admin account",
+                "operationId": "storeUser",
+                "requestBody": {
+                    "description": "Request properties",
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "first_name",
+                                    "last_name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation",
+                                    "address",
+                                    "phone_number"
+                                ],
+                                "properties": {
+                                    "first_name": {
+                                        "description": "User firstname",
+                                        "type": "string"
+                                    },
+                                    "last_name": {
+                                        "description": "User lastname",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "User email",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "User password",
+                                        "type": "string"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "User password",
+                                        "type": "string"
+                                    },
+                                    "address": {
+                                        "description": "User main address",
+                                        "type": "string"
+                                    },
+                                    "phone_number": {
+                                        "description": "User main phone number",
+                                        "type": "string"
+                                    },
+                                    "is_marketing": {
+                                        "description": "User marketing preference",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Page not found"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    },
+                    "500": {
+                        "description": "Internal Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/admin/user-edit/{uuid}": {
             "put": {
                 "tags": [
@@ -673,12 +758,12 @@
                 ]
             }
         },
-        "/api/v1/admin/create": {
+        "/api/v1/user/create": {
             "post": {
                 "tags": [
-                    "Admin"
+                    "User"
                 ],
-                "summary": "Create an Admin account",
+                "summary": "Create a User account",
                 "operationId": "store",
                 "requestBody": {
                     "description": "Request properties",
