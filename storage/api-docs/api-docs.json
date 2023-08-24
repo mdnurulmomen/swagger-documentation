@@ -146,7 +146,7 @@
                 ]
             }
         },
-        "v1/admin/user-edit/{uuid}": {
+        "/api/v1/admin/user-edit/{uuid}": {
             "put": {
                 "tags": [
                     "Admin"
@@ -510,7 +510,7 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "List all orders",
+                "summary": "List all self-orders",
                 "operationId": "getMyOrders",
                 "parameters": [
                     {
@@ -587,6 +587,92 @@
                 "operationId": "store",
                 "requestBody": {
                     "description": "Request properties",
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "first_name",
+                                    "last_name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation",
+                                    "address",
+                                    "phone_number"
+                                ],
+                                "properties": {
+                                    "first_name": {
+                                        "description": "User firstname",
+                                        "type": "string"
+                                    },
+                                    "last_name": {
+                                        "description": "User lastname",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "User email",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "User password",
+                                        "type": "string"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "User password",
+                                        "type": "string"
+                                    },
+                                    "address": {
+                                        "description": "User main address",
+                                        "type": "string"
+                                    },
+                                    "phone_number": {
+                                        "description": "User main phone number",
+                                        "type": "string"
+                                    },
+                                    "is_marketing": {
+                                        "description": "User marketing preference",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Page not found"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    },
+                    "500": {
+                        "description": "Internal Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/user/edit": {
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update self account",
+                "description": "Update an existing user.",
+                "operationId": "update",
+                "requestBody": {
+                    "description": "Input data properties",
                     "required": true,
                     "content": {
                         "application/x-www-form-urlencoded": {

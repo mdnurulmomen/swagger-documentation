@@ -20,7 +20,7 @@ class UserController extends Controller
      * @OA\Get(
      *     path="/api/v1/user/orders",
      *     tags={"User"},
-     *     summary="List all orders",
+     *     summary="List all self-orders",
      *     operationId="getMyOrders",
      *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
@@ -222,6 +222,87 @@ class UserController extends Controller
         return $this->generalApiResponse(200, [$newUser]);
     }
 
+    /**
+     * Update an existing user.
+     *
+     * @OA\Put(
+     *     path="/api/v1/user/edit",
+     *     tags={"User"},
+     *     summary="Update self account",
+     *     operationId="update",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Input data properties",
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 required={"first_name","last_name", "email", "password", "password_confirmation", "address", "phone_number"},
+     *                 @OA\Property(
+     *                     property="first_name",
+     *                     description="User firstname",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="last_name",
+     *                     description="User lastname",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="email",
+     *                     description="User email",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password",
+     *                     description="User password",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password_confirmation",
+     *                     description="User password",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="address",
+     *                     description="User main address",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="phone_number",
+     *                     description="User main phone number",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="is_marketing",
+     *                     description="User marketing preference",
+     *                     type="string"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Page not found"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server error"
+     *     )
+     * )
+     */
     public function update(Request $request)
     {
         $user = $this->guard()->user();

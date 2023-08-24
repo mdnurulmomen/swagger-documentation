@@ -206,7 +206,7 @@ class AdminController extends Controller
      * Update an existing user.
      *
      * @OA\Put(
-     *     path="v1/admin/user-edit/{uuid}",
+     *     path="/api/v1/admin/user-edit/{uuid}",
      *     tags={"Admin"},
      *     summary="Update an expected user",
      *     operationId="updateUser",
