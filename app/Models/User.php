@@ -20,7 +20,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $guarded = [
-        'id'
+        'id', 'uuid'
     ];
 
     /**
