@@ -131,4 +131,38 @@ class AdminTest extends TestCase
         ->assertJson(['success' => true])
         ->assertJsonPath('data.id', $newUser->id);
     }
+
+    /**
+     * A basic feature test example.
+     */
+    public function test_delete_method_returns_successfull_response(): void
+    {
+        $admin = User::factory()->create([
+            'password' => Hash::make('password'),
+            'is_admin' => 1,
+        ]);
+
+        $token = JWTAuth::attempt(['email'=> $admin->email, 'password'=> 'password', 'is_admin'=> 1]);
+
+        $newCategory = User::create([
+            'uuid' => Str::uuid(),
+            'first_name' => fake()->name(),
+            'last_name' => fake()->name(),
+            'is_admin' => rand(0, 1),
+            'is_marketing' => rand(0, 1),
+            'email' => fake()->unique()->safeEmail(),
+            'email_verified_at' => now(),
+            'password' => Hash::make('password'), // password
+            'address' => fake()->address(),
+            'phone_number' => fake()->unique()->e164PhoneNumber(),
+            'remember_token' => Str::random(10),
+        ]);
+
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer $token",
+        ])->deleteJson(route('admin.users.destroy', ['uuid' => $newCategory->uuid]));
+
+        $response->assertOk()
+        ->assertJson(['success' => true]);
+    }
 }
