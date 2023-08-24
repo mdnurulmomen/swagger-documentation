@@ -3,6 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Category;
+use App\Models\Post;
+use App\Models\Promotion;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -14,9 +19,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        User::truncate();           // to avoid duplicate values
 
-        \App\Models\User::create([
+        // Super-Admin
+        User::create([
             'uuid' => Str::uuid(),
             'first_name' => 'User',
             'last_name' => 'One',
@@ -26,5 +32,10 @@ class DatabaseSeeder extends Seeder
             'address' => 'User Address',
             'phone_number' => 'User Phone Number',
         ]);
+
+        User::factory(10)->create();
+        Category::factory(10)->create();
+        Post::factory(10)->create();
+        Promotion::factory(10)->create();
     }
 }
