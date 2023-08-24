@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Api\V1\UserOrderCollection;
 
@@ -88,7 +89,7 @@ class UserController extends Controller
 
         $query = Order::where('user_id', $user->id);
 
-        if ($request->sortBy) {
+        if ($request->sortBy && Schema::connection("mysql")->hasColumn('orders', $request->sortBy)) {
 
             if (filter_var($request->desc, FILTER_VALIDATE_BOOLEAN)) {
 

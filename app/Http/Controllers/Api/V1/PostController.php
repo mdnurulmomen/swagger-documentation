@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Schema;
 use App\Http\Resources\Api\V1\PostCollection;
 
 class PostController extends Controller
@@ -78,7 +79,7 @@ class PostController extends Controller
     {
         $query = Post::query();
 
-        if ($request->sortBy) {
+        if ($request->sortBy && Schema::connection("mysql")->hasColumn('posts', $request->sortBy)) {
 
             if (filter_var($request->desc, FILTER_VALIDATE_BOOLEAN)) {
 

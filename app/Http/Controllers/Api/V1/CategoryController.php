@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Api\V1\CategoryCollection;
 
@@ -79,7 +80,7 @@ class CategoryController extends Controller
     {
         $query = Category::query();
 
-        if ($request->sortBy) {
+        if ($request->sortBy && Schema::connection("mysql")->hasColumn('categories', $request->sortBy)) {
 
             if (filter_var($request->desc, FILTER_VALIDATE_BOOLEAN)) {
 

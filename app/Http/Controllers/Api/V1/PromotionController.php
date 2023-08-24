@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Schema;
 use App\Http\Resources\Api\V1\PromotionCollection;
 
 class PromotionController extends Controller
@@ -75,7 +76,7 @@ class PromotionController extends Controller
     {
         $query = Promotion::query();
 
-        if ($request->sortBy) {
+        if ($request->sortBy && Schema::connection("mysql")->hasColumn('promotions', $request->sortBy)) {
 
             if (filter_var($request->desc, FILTER_VALIDATE_BOOLEAN)) {
 
