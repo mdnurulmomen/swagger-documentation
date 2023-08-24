@@ -61,7 +61,7 @@ Route::name('admin.')->group(function () {
 
         Route::middleware(['auth.jwt', 'admin'])->group(function () {
 
-            Route::post('/create', [UserController::class, 'store'])->name('store');
+            Route::post('/create', [UserController::class, 'store'])->name('users.store');
             Route::get('/user-listing', [AdminController::class, 'getUserList'])->name('users.index');
             Route::put('/user-edit/{uuid}', [AdminController::class, 'updateUser'])->name('users.update');
             Route::delete('/user-delete/{uuid}', [AdminController::class, 'deleteUser'])->name('users.destroy');

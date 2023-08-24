@@ -20,7 +20,7 @@ class CategoryTest extends TestCase
      */
     public function test_index_method_returns_proper_response(): void
     {
-        $categories = Category::factory()->count(3)->create();
+        Category::factory()->count(3)->create();
 
         $response = $this->getJson(route('categories.index'));
 
@@ -118,10 +118,6 @@ class CategoryTest extends TestCase
             'title' => 'Category Title',
             'slug' => 'Category-Title'
         ]);
-
-        $categoryUpdatingPayload = [
-            'title' => 'Category Title Updated'
-        ];
 
         $response = $this->withHeaders([
             'Authorization' => "Bearer $token",

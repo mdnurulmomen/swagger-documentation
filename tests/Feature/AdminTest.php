@@ -165,4 +165,31 @@ class AdminTest extends TestCase
         $response->assertOk()
         ->assertJson(['success' => true]);
     }
+
+    /**
+     * A basic feature test example.
+     */
+    public function test_logout_method_returns_proper_response(): void
+    {
+        $admin = User::factory()->create([
+            'password' => Hash::make('password'),
+            'is_admin' => 1,
+        ]);
+
+        $token = JWTAuth::attempt(['email'=> $admin->email, 'password'=> 'password', 'is_admin'=> 1]);
+
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer $token",
+        ])->getJson(route('admin.logout'));
+
+        $response->assertOk()
+        ->assertJson(['success' => true]);
+
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer $token",
+        ])->getJson(route('admin.users.index'));
+
+        $response->assertUnauthorized();
+
+    }
 }
