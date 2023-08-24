@@ -55,7 +55,7 @@ class CategoryTest extends TestCase
 
         $title = fake()->title();
 
-        $categoryInputArray = [
+        $categoryPayload = [
             'uuid' => Str::uuid(),
             'title' => $title,
             'slug' => str_replace(' ', '-', $title),
@@ -65,10 +65,40 @@ class CategoryTest extends TestCase
 
         $response = $this->withHeaders([
             'Authorization' => "Bearer $token",
-        ])->postJson(route('categories.store', $categoryInputArray));
+        ])->postJson(route('categories.store', $categoryPayload));
 
         $response->assertOk()
         ->assertJsonCount(1, 'data')
         ->assertJsonPath('success', true);
+    }
+
+    /**
+     * A basic feature test example.
+     */
+    public function test_update_method_returns_successfull_response(): void
+    {
+        $admin = User::factory()->create([
+            'password' => Hash::make('password'),
+            'is_admin' => 1,
+        ]);
+
+        $token = JWTAuth::attempt(['email'=> $admin->email, 'password'=> 'password', 'is_admin'=> 1]);
+
+        $newCategory = Category::create([
+            'title' => 'Category Title',
+            'slug' => 'Category-Title'
+        ]);
+
+        $categoryUpdatingPayload = [
+            'title' => 'Category Title Updated'
+        ];
+
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer $token",
+        ])->putJson('api/v1/category/'.$newCategory->uuid, $categoryUpdatingPayload);
+
+        $response->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJson(['success' => true]);
     }
 }
