@@ -97,9 +97,34 @@ class AuthController extends Controller
     }
 
     /**
-     * Get the authenticated User
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Get(
+     *     path="/api/v1/user/",
+     *     tags={"User"},
+     *     summary="View self account",
+     *     operationId="me",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Page not found"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server error"
+     *     )
+     * )
      */
     public function me()
     {
