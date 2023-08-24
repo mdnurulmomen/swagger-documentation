@@ -14,7 +14,67 @@ class CategoryController extends Controller
     use ApiResponser;
 
     /**
-     * Display a listing of the resource.
+     * Category API endpoints.
+     *
+     * @OA\Get(
+     *     path="/api/v1/categories",
+     *     tags={"Categories"},
+     *     summary="List all categories",
+     *     operationId="index",
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Page Number of Pagination",
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="limit",
+     *         in="query",
+     *         description="Number of elements at per page when paginating",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="sortBy",
+     *         in="query",
+     *         description="Name of the field for sorting",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="desc",
+     *         in="query",
+     *         description="Expected order of data to search users",
+     *         @OA\Schema(
+     *             type="boolean",
+     *             enum={true, false},
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Page not found"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server error"
+     *     )
+     * )
      */
     public function index(Request $request)
     {
