@@ -197,37 +197,6 @@ class AuthController extends Controller
      *     )
      * )
      */
-
-    /**
-     *
-     * @OA\Get(
-     *     path="/api/v1/admin/logout",
-     *     tags={"Admin"},
-     *     summary="Logout an Admin account",
-     *     operationId="logout",
-     *     security={{"bearerAuth":{}}},
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation"
-     *     ),
-     *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Page not found"
-     *     ),
-     *     @OA\Response(
-     *         response=422,
-     *         description="Unprocessable Entity"
-     *     ),
-     *     @OA\Response(
-     *         response=500,
-     *         description="Internal Server error"
-     *     )
-     * )
-     */
     public function logout()
     {
         $this->guard()->logout();
@@ -466,6 +435,43 @@ class AuthController extends Controller
         }
 
         return $this->generalApiResponse(422, [], "Failed to authenticate user", []);
+    }
+
+    /**
+     *
+     * @OA\Get(
+     *     path="/api/v1/admin/logout",
+     *     tags={"Admin"},
+     *     summary="Logout an Admin account",
+     *     operationId="adminLogout",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Page not found"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server error"
+     *     )
+     * )
+     */
+    public function adminLogout()
+    {
+        $this->guard()->logout();
+
+        return $this->generalApiResponse(200);
     }
 
     protected function generateToken($email){
