@@ -212,6 +212,64 @@ class AuthController extends Controller
         return $this->generalApiResponse(200, ['reset_token' => $this->generateToken($request->email)]);
     }
 
+    /**
+     * @OA\Post(
+     *      path="/api/v1/user/reset-password-token",
+     *      tags={"User"},
+     *      summary="Reset a user password with a token",
+     *      operationId="resetPassword",
+     *      @OA\RequestBody(
+     *         required=true,
+     *         description="Request properties",
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 required={"token", "email", "password", "password_confirmation"},
+     *                 @OA\Property(
+     *                     property="token",
+     *                     description="Password reset token",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="email",
+     *                     description="User email",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password",
+     *                     description="User password",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password_confirmation",
+     *                     description="User password",
+     *                     type="string"
+     *                 ),
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *      ),
+     *      @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *      ),
+     *      @OA\Response(
+     *         response=404,
+     *         description="Page not found"
+     *      ),
+     *      @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity"
+     *      ),
+     *      @OA\Response(
+     *         response=500,
+     *         description="Internal Server error"
+     *      )
+     *  )
+     */
     public function resetPassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
