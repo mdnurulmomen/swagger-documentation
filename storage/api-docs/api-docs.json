@@ -691,7 +691,7 @@
                     "Categories"
                 ],
                 "summary": "List all categories",
-                "description": "Admin API endpoints.",
+                "description": "Category API endpoints.",
                 "operationId": "index",
                 "parameters": [
                     {
@@ -728,6 +728,44 @@
                                 true,
                                 false
                             ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Page not found"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    },
+                    "500": {
+                        "description": "Internal Server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/category/{uuid}": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Fetch a category",
+                "description": "Category API endpoints.",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "query",
+                        "description": "uuid of expected category",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 ],

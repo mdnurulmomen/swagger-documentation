@@ -142,7 +142,45 @@ class CategoryController extends Controller
         return $this->generalApiResponse(200, [$category]);
     }
 
-
+    /**
+     * Category API endpoints.
+     *
+     * @OA\Get(
+     *     path="/api/v1/category/{uuid}",
+     *     tags={"Categories"},
+     *     summary="Fetch a category",
+     *     operationId="show",
+     *     @OA\Parameter(
+     *         name="uuid",
+     *         in="query",
+     *         description="uuid of expected category",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Page not found"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server error"
+     *     )
+     * )
+     */
     public function show($uuid)
     {
         $category = Category::where('uuid', $uuid)->firstOrFail();
