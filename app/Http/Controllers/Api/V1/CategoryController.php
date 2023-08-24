@@ -18,7 +18,7 @@ class CategoryController extends Controller
      *
      * @OA\Get(
      *     path="/api/v1/categories",
-     *     tags={"Categories"},
+     *     tags={"Category"},
      *     summary="List all categories",
      *     operationId="index",
      *     @OA\Parameter(
@@ -104,7 +104,86 @@ class CategoryController extends Controller
         return new CategoryCollection($query->paginate($request->limit ?? 10));
     }
 
-    public function store(Request $request)
+    /**
+     * @OA\Post(
+     *      path="/api/v1/category/create",
+     *      tags={"Category"},
+     *      summary="Create a new category",
+     *      operationId="storeCategory",
+     *      security={{"bearerAuth":{}}},
+     *      @OA\RequestBody(
+     *         required=true,
+     *         description="Request properties",
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 required={"first_name","last_name", "email", "password", "password_confirmation", "address", "phone_number"},
+     *                 @OA\Property(
+     *                     property="first_name",
+     *                     description="User firstname",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="last_name",
+     *                     description="User lastname",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="email",
+     *                     description="User email",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password",
+     *                     description="User password",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password_confirmation",
+     *                     description="User password",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="address",
+     *                     description="User main address",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="phone_number",
+     *                     description="User main phone number",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="is_marketing",
+     *                     description="User marketing preference",
+     *                     type="string"
+     *                 )
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *      ),
+     *      @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *      ),
+     *      @OA\Response(
+     *         response=404,
+     *         description="Page not found"
+     *      ),
+     *      @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity"
+     *      ),
+     *      @OA\Response(
+     *         response=500,
+     *         description="Internal Server error"
+     *      )
+     *  )
+     */
+    public function storeCategory(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255'
@@ -147,7 +226,7 @@ class CategoryController extends Controller
      *
      * @OA\Get(
      *     path="/api/v1/category/{uuid}",
-     *     tags={"Categories"},
+     *     tags={"Category"},
      *     summary="Fetch a category",
      *     operationId="show",
      *     @OA\Parameter(
