@@ -385,7 +385,15 @@ class AdminController extends Controller
      */
     public function updateUser($uuid, Request $request)
     {
-        $user = User::where('uuid', $uuid)->firstOrFail();
+        try {
+
+            $user = User::where('uuid', $uuid)->firstOrFail();
+
+        } catch (\Throwable $th) {
+
+            return $this->generalApiResponse(200, [], 'User not found');
+
+        }
 
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
@@ -447,7 +455,15 @@ class AdminController extends Controller
      */
     public function deleteUser($uuid)
     {
-        $user = User::where('uuid', $uuid)->firstOrFail();
+        try {
+
+            $user = User::where('uuid', $uuid)->firstOrFail();
+
+        } catch (\Throwable $th) {
+
+            return $this->generalApiResponse(200, [], 'User not found');
+
+        }
 
         $user->delete();
 

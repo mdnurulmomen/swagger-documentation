@@ -230,7 +230,15 @@ class CategoryController extends Controller
             return $this->generalApiResponse(422, [], null, $validator->messages());
         }
 
-        $category = Category::where('uuid', $uuid)->firstOrFail();
+        try {
+
+            $category = Category::where('uuid', $uuid)->firstOrFail();
+
+        } catch (\Throwable $th) {
+
+            return $this->generalApiResponse(200, [], 'Category not found');
+
+        }
 
         $inputedDataArray = $validator->validated();
         $inputedDataArray += ['slug' => str_replace(' ', '-', $request->title)];
@@ -280,7 +288,15 @@ class CategoryController extends Controller
      */
     public function show($uuid)
     {
-        $category = Category::where('uuid', $uuid)->firstOrFail();
+        try {
+
+            $category = Category::where('uuid', $uuid)->firstOrFail();
+
+        } catch (\Throwable $th) {
+
+            return $this->generalApiResponse(200, [], 'Category not found');
+
+        }
 
         return $this->generalApiResponse(200, [$category]);
     }
@@ -325,7 +341,15 @@ class CategoryController extends Controller
      */
     public function deleteCategory($uuid)
     {
-        $category = Category::where('uuid', $uuid)->firstOrFail();
+        try {
+
+            $category = Category::where('uuid', $uuid)->firstOrFail();
+
+        } catch (\Throwable $th) {
+
+            return $this->generalApiResponse(200, [], 'Category not found');
+
+        }
 
         $category->delete();
 

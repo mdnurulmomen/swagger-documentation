@@ -143,7 +143,15 @@ class PostController extends Controller
      */
     public function getPost($uuid)
     {
-        $post = Post::where('uuid', $uuid)->firstOrFail();
+        try {
+
+            $post = Post::where('uuid', $uuid)->firstOrFail();
+
+        } catch (\Throwable $th) {
+
+            return $this->generalApiResponse(200, [], 'Post not found');
+
+        }
 
         return $this->generalApiResponse(200, [$post]);
     }
