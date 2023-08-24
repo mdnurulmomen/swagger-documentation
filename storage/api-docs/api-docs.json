@@ -974,6 +974,71 @@
                 ]
             }
         },
+        "/api/v1/main/promotions": {
+            "get": {
+                "tags": [
+                    "Main-Page"
+                ],
+                "summary": "List all promotions",
+                "description": "Promotion API endpoints.",
+                "operationId": "getPromotionList",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page Number of Pagination",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Number of elements at per page when paginating",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sortBy",
+                        "in": "query",
+                        "description": "Name of the field for sorting",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "desc",
+                        "in": "query",
+                        "description": "Expected order of data to search users",
+                        "schema": {
+                            "type": "boolean",
+                            "enum": [
+                                true,
+                                false
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Page not found"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    },
+                    "500": {
+                        "description": "Internal Server error"
+                    }
+                }
+            }
+        },
         "/api/v1/user/orders": {
             "get": {
                 "tags": [
