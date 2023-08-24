@@ -82,4 +82,53 @@ class AdminTest extends TestCase
 
         $response->assertJsonCount(1, 'data');
     }
+
+    /**
+     * A basic feature test example.
+     */
+    public function test_update_user_method_returns_successfull_response(): void
+    {
+        $admin = User::factory()->create([
+            'password' => Hash::make('password'),
+            'is_admin' => 1,
+        ]);
+
+        $token = JWTAuth::attempt(['email'=> $admin->email, 'password'=> 'password', 'is_admin'=> 1]);
+
+        $newUser = User::create([
+            'first_name' => 'User',
+            'last_name' => 'One',
+            'is_admin' => rand(0, 1),
+            'is_marketing' => rand(0, 1),
+            'email' => 'user-1@email.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password'), // password
+            'address' => fake()->address(),
+            'phone_number' => fake()->unique()->e164PhoneNumber(),
+            'remember_token' => Str::random(10),
+        ]);
+
+        $payload = [
+            'first_name' => 'User Updated',
+            'last_name' => 'One Updated',
+            'is_admin' => rand(0, 1),
+            'is_marketing' => rand(0, 1),
+            'email' => 'user-1-updated@email.com',
+            'email_verified_at' => now(),
+            'password' => 'password', // password
+            'password_confirmation' => 'password', // password
+            'address' => fake()->address(),
+            'phone_number' => fake()->unique()->e164PhoneNumber(),
+            'remember_token' => Str::random(10),
+        ];
+
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer $token",
+        ])->putJson('/api/v1/admin/user-edit/'.$newUser->uuid, $payload);
+
+        $response->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJson(['success' => true])
+        ->assertJsonPath('data.id', $newUser->id);
+    }
 }
