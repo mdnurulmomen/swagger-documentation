@@ -764,45 +764,11 @@
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "required": [
-                                    "first_name",
-                                    "last_name",
-                                    "email",
-                                    "password",
-                                    "password_confirmation",
-                                    "address",
-                                    "phone_number"
+                                    "title"
                                 ],
                                 "properties": {
-                                    "first_name": {
-                                        "description": "User firstname",
-                                        "type": "string"
-                                    },
-                                    "last_name": {
-                                        "description": "User lastname",
-                                        "type": "string"
-                                    },
-                                    "email": {
-                                        "description": "User email",
-                                        "type": "string"
-                                    },
-                                    "password": {
-                                        "description": "User password",
-                                        "type": "string"
-                                    },
-                                    "password_confirmation": {
-                                        "description": "User password",
-                                        "type": "string"
-                                    },
-                                    "address": {
-                                        "description": "User main address",
-                                        "type": "string"
-                                    },
-                                    "phone_number": {
-                                        "description": "User main phone number",
-                                        "type": "string"
-                                    },
-                                    "is_marketing": {
-                                        "description": "User marketing preference",
+                                    "title": {
+                                        "description": "Category Title",
                                         "type": "string"
                                     }
                                 },
@@ -977,10 +943,9 @@
         "/api/v1/main/blog": {
             "get": {
                 "tags": [
-                    "Main-Page"
+                    "Main Page"
                 ],
                 "summary": "List all posts",
-                "description": "Main Page API endpoints.",
                 "operationId": "getPostList",
                 "parameters": [
                     {
@@ -1045,12 +1010,11 @@
                     "Main Page"
                 ],
                 "summary": "Fetch a post",
-                "description": "Main Page API endpoints.",
                 "operationId": "getPost",
                 "parameters": [
                     {
                         "name": "uuid",
-                        "in": "query",
+                        "in": "path",
                         "description": "uuid of expected post",
                         "required": true,
                         "schema": {
@@ -1080,7 +1044,7 @@
         "/api/v1/main/promotions": {
             "get": {
                 "tags": [
-                    "Main-Page"
+                    "Main Page"
                 ],
                 "summary": "List all promotions",
                 "operationId": "getPromotionList",

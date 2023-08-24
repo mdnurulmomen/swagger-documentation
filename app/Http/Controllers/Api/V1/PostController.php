@@ -13,7 +13,6 @@ class PostController extends Controller
     use ApiResponser;
 
     /**
-     * Main Page API endpoints.
      *
      * @OA\Get(
      *     path="/api/v1/main/blog",
@@ -104,7 +103,6 @@ class PostController extends Controller
     }
 
     /**
-     * Main Page API endpoints.
      *
      * @OA\Get(
      *     path="/api/v1/main/blog/{uuid}",
@@ -113,7 +111,7 @@ class PostController extends Controller
      *     operationId="getPost",
      *     @OA\Parameter(
      *         name="uuid",
-     *         in="query",
+     *         in="path",
      *         description="uuid of expected post",
      *         required=true,
      *         @OA\Schema(

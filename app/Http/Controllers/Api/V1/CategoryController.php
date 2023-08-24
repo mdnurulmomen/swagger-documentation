@@ -14,7 +14,6 @@ class CategoryController extends Controller
     use ApiResponser;
 
     /**
-     * Category API endpoints.
      *
      * @OA\Get(
      *     path="/api/v1/categories",
@@ -117,45 +116,10 @@ class CategoryController extends Controller
      *         @OA\MediaType(
      *             mediaType="application/x-www-form-urlencoded",
      *             @OA\Schema(
-     *                 required={"first_name","last_name", "email", "password", "password_confirmation", "address", "phone_number"},
+     *                 required={"title"},
      *                 @OA\Property(
-     *                     property="first_name",
-     *                     description="User firstname",
-     *                     type="string"
-     *                 ),
-     *                 @OA\Property(
-     *                     property="last_name",
-     *                     description="User lastname",
-     *                     type="string"
-     *                 ),
-     *                 @OA\Property(
-     *                     property="email",
-     *                     description="User email",
-     *                     type="string"
-     *                 ),
-     *                 @OA\Property(
-     *                     property="password",
-     *                     description="User password",
-     *                     type="string"
-     *                 ),
-     *                 @OA\Property(
-     *                     property="password_confirmation",
-     *                     description="User password",
-     *                     type="string"
-     *                 ),
-     *                 @OA\Property(
-     *                     property="address",
-     *                     description="User main address",
-     *                     type="string"
-     *                 ),
-     *                 @OA\Property(
-     *                     property="phone_number",
-     *                     description="User main phone number",
-     *                     type="string"
-     *                 ),
-     *                 @OA\Property(
-     *                     property="is_marketing",
-     *                     description="User marketing preference",
+     *                     property="title",
+     *                     description="Category Title",
      *                     type="string"
      *                 )
      *             )
@@ -202,7 +166,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Update an existing category.
      *
      * @OA\Put(
      *     path="/api/v1/category/{uuid}",
@@ -277,7 +240,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Category API endpoints.
      *
      * @OA\Get(
      *     path="/api/v1/category/{uuid}",
@@ -286,7 +248,7 @@ class CategoryController extends Controller
      *     operationId="show",
      *     @OA\Parameter(
      *         name="uuid",
-     *         in="query",
+     *         in="path",
      *         description="uuid of expected category",
      *         required=true,
      *         @OA\Schema(
