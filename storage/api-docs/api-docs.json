@@ -27,7 +27,6 @@
                         "name": "page",
                         "in": "query",
                         "description": "Page Number of Pagination",
-                        "required": false,
                         "schema": {
                             "type": "integer"
                         }
@@ -36,7 +35,6 @@
                         "name": "limit",
                         "in": "query",
                         "description": "Number of elements at per page when paginating",
-                        "required": false,
                         "schema": {
                             "type": "integer"
                         }
@@ -45,7 +43,6 @@
                         "name": "sortBy",
                         "in": "query",
                         "description": "Name of the field for sorting",
-                        "required": false,
                         "schema": {
                             "type": "string"
                         }
@@ -54,7 +51,6 @@
                         "name": "desc",
                         "in": "query",
                         "description": "Expected order of data to search users",
-                        "required": false,
                         "schema": {
                             "type": "boolean",
                             "enum": [
@@ -67,7 +63,6 @@
                         "name": "marketing",
                         "in": "query",
                         "description": "Expected option to search users",
-                        "required": false,
                         "schema": {
                             "type": "boolean",
                             "enum": [
@@ -80,16 +75,6 @@
                         "name": "first_name",
                         "in": "query",
                         "description": "Expected first name to search users",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "last_name",
-                        "in": "query",
-                        "description": "Expected last name to search users",
-                        "required": false,
                         "schema": {
                             "type": "string"
                         }
@@ -98,7 +83,6 @@
                         "name": "email",
                         "in": "query",
                         "description": "Expected email to search users",
-                        "required": false,
                         "schema": {
                             "type": "email"
                         }
@@ -107,7 +91,6 @@
                         "name": "phone",
                         "in": "query",
                         "description": "Expected phone number to search users",
-                        "required": false,
                         "schema": {
                             "type": "string"
                         }
@@ -116,7 +99,6 @@
                         "name": "address",
                         "in": "query",
                         "description": "Expected address to search users",
-                        "required": false,
                         "schema": {
                             "type": "string"
                         }

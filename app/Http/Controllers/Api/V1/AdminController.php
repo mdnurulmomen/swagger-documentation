@@ -26,7 +26,6 @@ class AdminController extends Controller
      *         name="page",
      *         in="query",
      *         description="Page Number of Pagination",
-     *         required=false,
      *         @OA\Schema(
      *             type="integer"
      *         )
@@ -35,7 +34,6 @@ class AdminController extends Controller
      *         name="limit",
      *         in="query",
      *         description="Number of elements at per page when paginating",
-     *         required=false,
      *         @OA\Schema(
      *             type="integer",
      *         )
@@ -44,7 +42,6 @@ class AdminController extends Controller
      *         name="sortBy",
      *         in="query",
      *         description="Name of the field for sorting",
-     *         required=false,
      *         @OA\Schema(
      *             type="string",
      *         )
@@ -53,7 +50,6 @@ class AdminController extends Controller
      *         name="desc",
      *         in="query",
      *         description="Expected order of data to search users",
-     *         required=false,
      *         @OA\Schema(
      *             type="boolean",
      *             enum={true, false},
@@ -63,8 +59,6 @@ class AdminController extends Controller
      *         name="marketing",
      *         in="query",
      *         description="Expected option to search users",
-     *         required=false,
-     *
      *         @OA\Schema(
      *             type="boolean",
      *             enum={true, false},
@@ -74,17 +68,6 @@ class AdminController extends Controller
      *         name="first_name",
      *         in="query",
      *         description="Expected first name to search users",
-     *         required=false,
-     *
-     *         @OA\Schema(
-     *             type="string",
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="last_name",
-     *         in="query",
-     *         description="Expected last name to search users",
-     *         required=false,
      *         @OA\Schema(
      *             type="string",
      *         )
@@ -93,7 +76,6 @@ class AdminController extends Controller
      *         name="email",
      *         in="query",
      *         description="Expected email to search users",
-     *         required=false,
      *         @OA\Schema(
      *             type="email",
      *         )
@@ -102,7 +84,6 @@ class AdminController extends Controller
      *         name="phone",
      *         in="query",
      *         description="Expected phone number to search users",
-     *         required=false,
      *         @OA\Schema(
      *             type="string",
      *         )
@@ -111,7 +92,6 @@ class AdminController extends Controller
      *         name="address",
      *         in="query",
      *         description="Expected address to search users",
-     *         required=false,
      *         @OA\Schema(
      *             type="string",
      *         )
