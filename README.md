@@ -38,16 +38,45 @@ Run the database seeder
 
     php artisan db:seed
 
+## JWT Config
+
+To work **asymmetric** token, we need both **public** & **private** keys. 
+In order to generate those, we need a strong passphrase that should not be shared. In this test project I’ll use this (the following key is just for this demo purpose.
+
+**_Note_:** Please change it for your system):
+
+    sO9sH6qT8jA0wV5gE5eT3kY2
+
+And I generated public and private keys with this passphrase key and already included at **storage/jwt**  directory. 
+
+**_Note_:** Please, change the keys if you would work on enhancement. The command to generate an RSA private key of 4096 bits encrypted via AES256 into storage/jwt/private.pem is:
+
+    openssl genrsa -passout pass:sO9sH6qT8jA0wV5gE5eT3kY2 -out storage/jwt/private.pem -aes256 4096
+
+
+To generate the public key from our private key:
+
+    openssl rsa -passin pass:sO9sH6qT8jA0wV5gE5eT3kY2 -pubout -in storage/jwt/private.pem -out storage/jwt/public.pem
+
+Now we have public.pem and private.pem into our storage/jwt folder. We’ll add to the .env file our JWT configuration about the algorithm used and our keys :
+
+    JWT_ALGO=RS256
+    JWT_PUBLIC_KEY=jwt/public.pem
+    JWT_PRIVATE_KEY=jwt/private.pem
+    JWT_PASSPHRASE=sO9sH6qT8jA0wV5gE5eT3kY2
+
+Please, make sure **config/jwt.php** file is updated to inform about the location of the private and public key:
+
+    'public' => 'file://'.storage_path(env('JWT_PUBLIC_KEY')),
+    
+    'private' => 'file://'.storage_path(env('JWT_PRIVATE_KEY')),
+
 Start the local development server and you're done
 
     php artisan serve
 
 You can now access the server at http://localhost:8000
 
-
-***Note*** : It's recommended to have a clean database before seeding. You can refresh your migrations at any point to clean the database by running the following command
-
-    php artisan migrate:refresh
     
 ## Docker
 
