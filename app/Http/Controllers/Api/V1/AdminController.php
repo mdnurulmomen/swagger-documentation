@@ -14,7 +14,129 @@ class AdminController extends Controller
     use ApiResponser;
 
     /**
-     * Display a listing of the resource.
+     * Admin API endpoints.
+     *
+     * @OA\Get(
+     *     path="/api/v1/admin/user-listing",
+     *     tags={"Admin"},
+     *     summary="List all users",
+     *     operationId="getUserList",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Page Number of Pagination",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="limit",
+     *         in="query",
+     *         description="Number of elements at per page when paginating",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="sortBy",
+     *         in="query",
+     *         description="Name of the field for sorting",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="desc",
+     *         in="query",
+     *         description="Expected order of data to search users",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="boolean",
+     *             enum={true, false},
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="marketing",
+     *         in="query",
+     *         description="Expected option to search users",
+     *         required=false,
+     *
+     *         @OA\Schema(
+     *             type="boolean",
+     *             enum={true, false},
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="first_name",
+     *         in="query",
+     *         description="Expected first name to search users",
+     *         required=false,
+     *
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="last_name",
+     *         in="query",
+     *         description="Expected last name to search users",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="Expected email to search users",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="email",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="phone",
+     *         in="query",
+     *         description="Expected phone number to search users",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="address",
+     *         in="query",
+     *         description="Expected address to search users",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Page not found"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server error"
+     *     )
+     * )
      */
     public function getUserList(Request $request)
     {
@@ -80,6 +202,95 @@ class AdminController extends Controller
         return new UserCollection($query->paginate($request->limit ?? 10));
     }
 
+    /**
+     * Update an existing user.
+     *
+     * @OA\Put(
+     *     path="v1/admin/user-edit/{uuid}",
+     *     tags={"Admin"},
+     *     summary="Update an expected user",
+     *     operationId="updateUser",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="uuid",
+     *         in="query",
+     *         description="uuid of expected user to update",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         description="Input data format",
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="first_name",
+     *                     description="User firstname",
+     *                     type="string",
+     *                 ),
+     *                 @OA\Property(
+     *                     property="last_name",
+     *                     description="User lastname",
+     *                     type="string",
+     *                 ),
+     *                 @OA\Property(
+     *                     property="email",
+     *                     description="User email",
+     *                     type="string",
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password",
+     *                     description="User password",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password_confirmation",
+     *                     description="User password",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="address",
+     *                     description="User main address",
+     *                     type="string",
+     *                 ),
+     *                 @OA\Property(
+     *                     property="phone_number",
+     *                     description="User main phone number",
+     *                     type="string",
+     *                 ),
+     *                 @OA\Property(
+     *                     property="is_marketing",
+     *                     description="User marketing preference",
+     *                     type="string",
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Page not found"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server error"
+     *     )
+     * )
+     */
     public function updateUser($uuid, Request $request)
     {
         $user = User::where('uuid', $uuid)->firstOrFail();
@@ -104,6 +315,44 @@ class AdminController extends Controller
         return $this->generalApiResponse(200, [$user]);
     }
 
+    /**
+     * @OA\Delete(
+     *     path="/api/v1/admin/user-delete/{uuid}",
+     *     tags={"Admin"},
+     *     summary="Deletes a User account",
+     *     operationId="deleteUser",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="uuid",
+     *         in="path",
+     *         required=true,
+     *         description="uuid of expected user",
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Page not found"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server error"
+     *     )
+     * )
+     */
     public function deleteUser($uuid)
     {
         $user = User::where('uuid', $uuid)->firstOrFail();

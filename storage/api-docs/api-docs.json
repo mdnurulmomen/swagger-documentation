@@ -23,7 +23,6 @@
                         "in": "query",
                         "description": "Page Number of Pagination",
                         "required": false,
-                        "explode": true,
                         "schema": {
                             "type": "integer"
                         }
@@ -33,7 +32,6 @@
                         "in": "query",
                         "description": "Number of elements at per page when paginating",
                         "required": false,
-                        "explode": true,
                         "schema": {
                             "type": "integer"
                         }
@@ -43,7 +41,6 @@
                         "in": "query",
                         "description": "Name of the field for sorting",
                         "required": false,
-                        "explode": true,
                         "schema": {
                             "type": "string"
                         }
@@ -53,7 +50,6 @@
                         "in": "query",
                         "description": "Expected order of data to search users",
                         "required": false,
-                        "explode": true,
                         "schema": {
                             "type": "boolean",
                             "enum": [
@@ -67,7 +63,6 @@
                         "in": "query",
                         "description": "Expected option to search users",
                         "required": false,
-                        "explode": true,
                         "schema": {
                             "type": "boolean",
                             "enum": [
@@ -81,7 +76,6 @@
                         "in": "query",
                         "description": "Expected first name to search users",
                         "required": false,
-                        "explode": true,
                         "schema": {
                             "type": "string"
                         }
@@ -91,7 +85,6 @@
                         "in": "query",
                         "description": "Expected last name to search users",
                         "required": false,
-                        "explode": true,
                         "schema": {
                             "type": "string"
                         }
@@ -101,7 +94,6 @@
                         "in": "query",
                         "description": "Expected email to search users",
                         "required": false,
-                        "explode": true,
                         "schema": {
                             "type": "email"
                         }
@@ -111,7 +103,6 @@
                         "in": "query",
                         "description": "Expected phone number to search users",
                         "required": false,
-                        "explode": true,
                         "schema": {
                             "type": "string"
                         }
@@ -121,7 +112,6 @@
                         "in": "query",
                         "description": "Expected address to search users",
                         "required": false,
-                        "explode": true,
                         "schema": {
                             "type": "string"
                         }
@@ -136,14 +126,17 @@
                     },
                     "404": {
                         "description": "Page not found"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    },
+                    "500": {
+                        "description": "Internal Server error"
                     }
                 },
                 "security": [
                     {
-                        "petshop_auth": [
-                            "write:admin",
-                            "read:admin"
-                        ]
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -153,18 +146,121 @@
                 "tags": [
                     "Admin"
                 ],
-                "summary": "Update expected user",
+                "summary": "Update an expected user",
                 "description": "Update an existing user.",
                 "operationId": "updateUser",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "query",
+                        "description": "uuid of expected user to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Input data format",
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "description": "User firstname",
+                                        "type": "string"
+                                    },
+                                    "last_name": {
+                                        "description": "User lastname",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "User email",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "User password",
+                                        "type": "string"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "User password",
+                                        "type": "string"
+                                    },
+                                    "address": {
+                                        "description": "User main address",
+                                        "type": "string"
+                                    },
+                                    "phone_number": {
+                                        "description": "User main phone number",
+                                        "type": "string"
+                                    },
+                                    "is_marketing": {
+                                        "description": "User marketing preference",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
-                    "400": {
-                        "description": "Invalid ID supplied"
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
                     },
                     "404": {
-                        "description": "Record not found"
+                        "description": "Page not found"
                     },
                     "422": {
-                        "description": "Validation exception"
+                        "description": "Unprocessable Entity"
+                    },
+                    "500": {
+                        "description": "Internal Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/admin/user-delete/{uuid}": {
+            "delete": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Deletes a User account",
+                "operationId": "deleteUser",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "uuid of expected user",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Page not found"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    },
+                    "500": {
+                        "description": "Internal Server error"
                     }
                 },
                 "security": [
