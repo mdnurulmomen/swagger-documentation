@@ -691,7 +691,6 @@
                     "Category"
                 ],
                 "summary": "List all categories",
-                "description": "Category API endpoints.",
                 "operationId": "index",
                 "parameters": [
                     {
@@ -807,12 +806,11 @@
                     "Category"
                 ],
                 "summary": "Fetch a category",
-                "description": "Category API endpoints.",
                 "operationId": "show",
                 "parameters": [
                     {
                         "name": "uuid",
-                        "in": "query",
+                        "in": "path",
                         "description": "uuid of expected category",
                         "required": true,
                         "schema": {
@@ -843,7 +841,6 @@
                     "Category"
                 ],
                 "summary": "Update an existing category",
-                "description": "Update an existing category.",
                 "operationId": "updateCategory",
                 "parameters": [
                     {
