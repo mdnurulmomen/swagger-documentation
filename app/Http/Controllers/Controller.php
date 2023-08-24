@@ -14,6 +14,9 @@ use Illuminate\Routing\Controller as BaseController;
  *      @OA\Contact(
  *          email="mdnurulmomen.bd@gmail.com"
  *      )
+ * ),
+ * @OA\Server(
+ *     url="http://127.0.0.1:8000/",
  * )
  */
 class Controller extends BaseController
