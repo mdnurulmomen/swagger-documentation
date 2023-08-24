@@ -221,25 +221,26 @@ class AdminController extends Controller
      *         )
      *     ),
      *     @OA\RequestBody(
-     *         description="Input data format",
+     *         required=true,
+     *         description="Input data properties",
      *         @OA\MediaType(
      *             mediaType="application/x-www-form-urlencoded",
      *             @OA\Schema(
-     *                 type="object",
+     *                 required={"first_name","last_name", "email", "password", "password_confirmation", "address", "phone_number"},
      *                 @OA\Property(
      *                     property="first_name",
      *                     description="User firstname",
-     *                     type="string",
+     *                     type="string"
      *                 ),
      *                 @OA\Property(
      *                     property="last_name",
      *                     description="User lastname",
-     *                     type="string",
+     *                     type="string"
      *                 ),
      *                 @OA\Property(
      *                     property="email",
      *                     description="User email",
-     *                     type="string",
+     *                     type="string"
      *                 ),
      *                 @OA\Property(
      *                     property="password",
@@ -254,17 +255,17 @@ class AdminController extends Controller
      *                 @OA\Property(
      *                     property="address",
      *                     description="User main address",
-     *                     type="string",
+     *                     type="string"
      *                 ),
      *                 @OA\Property(
      *                     property="phone_number",
      *                     description="User main phone number",
-     *                     type="string",
+     *                     type="string"
      *                 ),
      *                 @OA\Property(
      *                     property="is_marketing",
      *                     description="User marketing preference",
-     *                     type="string",
+     *                     type="string"
      *                 )
      *             )
      *         )
