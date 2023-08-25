@@ -125,25 +125,25 @@ class AdminController extends Controller
 
         if ($request->first_name) {
 
-            $query->where('first_name', 'like', "$request->first_name%");
+            $query->where('first_name', 'like', "%$request->first_name%");
 
         }
 
         if ($request->email) {
 
-            $query->where('email', 'like', "$request->email%");
+            $query->where('email', 'like', "%$request->email%");
 
         }
 
         if ($request->phone) {
 
-            $query->where('phone_number', 'like', "$request->phone%");
+            $query->where('phone_number', 'like', "%$request->phone%");
 
         }
 
         if ($request->address) {
 
-            $query->where('address', 'like', "$request->address%");
+            $query->where('address', 'like', "%$request->address%");
 
         }
 
