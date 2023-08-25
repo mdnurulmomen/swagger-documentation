@@ -305,7 +305,7 @@ class AdminController extends Controller
      *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *         name="uuid",
-     *         in="query",
+     *         in="path",
      *         description="uuid of expected user to update",
      *         required=true,
      *         @OA\Schema(
