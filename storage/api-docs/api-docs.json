@@ -152,35 +152,35 @@
                                 ],
                                 "properties": {
                                     "first_name": {
-                                        "description": "User firstname",
+                                        "description": "Admin firstname",
                                         "type": "string"
                                     },
                                     "last_name": {
-                                        "description": "User lastname",
+                                        "description": "Admin lastname",
                                         "type": "string"
                                     },
                                     "email": {
-                                        "description": "User email",
+                                        "description": "Admin email",
                                         "type": "string"
                                     },
                                     "password": {
-                                        "description": "User password",
+                                        "description": "Admin password",
                                         "type": "string"
                                     },
                                     "password_confirmation": {
-                                        "description": "User password",
+                                        "description": "Admin password",
                                         "type": "string"
                                     },
                                     "address": {
-                                        "description": "User main address",
+                                        "description": "Admin main address",
                                         "type": "string"
                                     },
                                     "phone_number": {
-                                        "description": "User main phone number",
+                                        "description": "Admin main phone number",
                                         "type": "string"
                                     },
                                     "is_marketing": {
-                                        "description": "User marketing preference",
+                                        "description": "Admin marketing preference",
                                         "type": "string"
                                     }
                                 },
@@ -278,7 +278,11 @@
                                     },
                                     "is_marketing": {
                                         "description": "User marketing preference",
-                                        "type": "string"
+                                        "type": "boolean",
+                                        "enum": [
+                                            true,
+                                            false
+                                        ]
                                     }
                                 },
                                 "type": "object"

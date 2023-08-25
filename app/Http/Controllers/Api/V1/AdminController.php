@@ -199,43 +199,44 @@ class AdminController extends Controller
      *                 required={"first_name","last_name", "email", "password", "password_confirmation", "address", "phone_number"},
      *                 @OA\Property(
      *                     property="first_name",
-     *                     description="User firstname",
+     *                     description="Admin firstname",
      *                     type="string"
      *                 ),
      *                 @OA\Property(
      *                     property="last_name",
-     *                     description="User lastname",
+     *                     description="Admin lastname",
      *                     type="string"
      *                 ),
      *                 @OA\Property(
      *                     property="email",
-     *                     description="User email",
+     *                     description="Admin email",
      *                     type="string"
      *                 ),
      *                 @OA\Property(
      *                     property="password",
-     *                     description="User password",
+     *                     description="Admin password",
      *                     type="string"
      *                 ),
      *                 @OA\Property(
      *                     property="password_confirmation",
-     *                     description="User password",
+     *                     description="Admin password",
      *                     type="string"
      *                 ),
      *                 @OA\Property(
      *                     property="address",
-     *                     description="User main address",
+     *                     description="Admin main address",
      *                     type="string"
      *                 ),
      *                 @OA\Property(
      *                     property="phone_number",
-     *                     description="User main phone number",
+     *                     description="Admin main phone number",
      *                     type="string"
      *                 ),
      *                 @OA\Property(
      *                     property="is_marketing",
-     *                     description="User marketing preference",
-     *                     type="string"
+     *                     description="Admin marketing preference",
+     *                     type="boolean",
+     *                     enum={true, false}
      *                 )
      *             )
      *         )
@@ -356,7 +357,8 @@ class AdminController extends Controller
      *                 @OA\Property(
      *                     property="is_marketing",
      *                     description="User marketing preference",
-     *                     type="string"
+     *                     type="boolean",
+     *                     enum={true, false}
      *                 )
      *             )
      *         )

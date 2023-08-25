@@ -165,7 +165,8 @@ class UserController extends Controller
      *                 @OA\Property(
      *                     property="is_marketing",
      *                     description="User marketing preference",
-     *                     type="string"
+     *                     type="boolean",
+     *                     enum={true, false}
      *                 )
      *             )
      *         )
@@ -277,7 +278,8 @@ class UserController extends Controller
      *                 @OA\Property(
      *                     property="is_marketing",
      *                     description="User marketing preference",
-     *                     type="string"
+     *                     type="boolean",
+     *                     enum={true, false}
      *                 )
      *             )
      *         )
