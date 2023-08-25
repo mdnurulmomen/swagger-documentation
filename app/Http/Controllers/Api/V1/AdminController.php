@@ -155,7 +155,7 @@ class AdminController extends Controller
 
         if (filter_var($request->marketing, FILTER_VALIDATE_BOOLEAN)) {
 
-            $query->where('is_marketing', $request->marketing);
+            $query->where('is_marketing', filter_var($request->marketing, FILTER_VALIDATE_BOOLEAN));
 
         }
 
