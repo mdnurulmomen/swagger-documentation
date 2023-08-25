@@ -181,7 +181,11 @@
                                     },
                                     "is_marketing": {
                                         "description": "Admin marketing preference",
-                                        "type": "string"
+                                        "type": "boolean",
+                                        "enum": [
+                                            true,
+                                            false
+                                        ]
                                     }
                                 },
                                 "type": "object"
@@ -224,7 +228,7 @@
                 "parameters": [
                     {
                         "name": "uuid",
-                        "in": "query",
+                        "in": "path",
                         "description": "uuid of expected user to update",
                         "required": true,
                         "schema": {
@@ -1232,7 +1236,11 @@
                                     },
                                     "is_marketing": {
                                         "description": "User marketing preference",
-                                        "type": "string"
+                                        "type": "boolean",
+                                        "enum": [
+                                            true,
+                                            false
+                                        ]
                                     }
                                 },
                                 "type": "object"
@@ -1318,7 +1326,11 @@
                                     },
                                     "is_marketing": {
                                         "description": "User marketing preference",
-                                        "type": "string"
+                                        "type": "boolean",
+                                        "enum": [
+                                            true,
+                                            false
+                                        ]
                                     }
                                 },
                                 "type": "object"

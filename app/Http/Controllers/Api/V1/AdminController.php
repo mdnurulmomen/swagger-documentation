@@ -265,6 +265,10 @@ class AdminController extends Controller
      */
     public function storeUser(Request $request)
     {
+        $request->merge([
+            'is_marketing' => filter_var($request->is_marketing, FILTER_VALIDATE_BOOLEAN)
+        ]);
+
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|min:3|max:255',
             'last_name' => 'required|string|min:3|max:255',
@@ -396,6 +400,10 @@ class AdminController extends Controller
             return $this->generalApiResponse(200, [], 'User not found');
 
         }
+
+        $request->merge([
+            'is_marketing' => filter_var($request->is_marketing, FILTER_VALIDATE_BOOLEAN)
+        ]);
 
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',

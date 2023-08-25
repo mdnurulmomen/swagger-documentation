@@ -195,6 +195,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge([
+            'is_marketing' => filter_var($request->is_marketing, FILTER_VALIDATE_BOOLEAN)
+        ]);
+
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|min:3|max:255',
             'last_name' => 'required|string|min:3|max:255',
@@ -309,6 +313,10 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $user = $this->guard()->user();
+
+        $request->merge([
+            'is_marketing' => filter_var($request->is_marketing, FILTER_VALIDATE_BOOLEAN)
+        ]);
 
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|min:3|max:255',
