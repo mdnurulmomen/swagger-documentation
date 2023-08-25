@@ -138,16 +138,14 @@ Run the laravel development server
 
     php artisan serve
 
-The api can now be accessed at
-
-    http://localhost:8000/api/v1
-
-The `.env.testing` is already included with this project. So according to our `.env.testing`, you may create a new database **test_petshop** to run the [test cases](https://laravel.com/docs/10.x/testing).
-
 Run the database migrations 
 (**Set the database connection & credentials mentioned in .env.testing before migrating**)
 
     php artisan migrate --env=testing
+
+The api can now be accessed at
+
+    http://localhost:8000/api/v1
 
 Request headers
 
@@ -157,6 +155,10 @@ Request headers
 | Yes      	| Accept         	| application/json 	|
 | Yes      	| X-Requested-With 	| XMLHttpRequest   	|
 | Optional 	| Authorization    	| Token {JWT}      	|
+
+Run the [Test Cases](https://laravel.com/docs/10.x/testing)
+
+    php artisan test
 
 ----------
  
