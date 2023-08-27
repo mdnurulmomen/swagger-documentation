@@ -120,7 +120,7 @@ class BrandController extends Controller
      *                 required={"title"},
      *                 @OA\Property(
      *                     property="title",
-     *                     description="Category Title",
+     *                     description="Brand Title",
      *                     type="string"
      *                 )
      *             )
@@ -156,5 +156,58 @@ class BrandController extends Controller
         $newBrand = Brand::create($inputedDataArray);
 
         return $this->generalApiResponse(200, ['uuid' => $newBrand->uuid]);
+    }
+
+    /**
+     *
+     * @OA\Get(
+     *     path="/api/v1/brand/{uuid}",
+     *     tags={"Brand"},
+     *     summary="Fetch a brand",
+     *     operationId="showBrand",
+     *     @OA\Parameter(
+     *         name="uuid",
+     *         in="path",
+     *         description="uuid of expected brand",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Page not found"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server error"
+     *     )
+     * )
+     */
+    public function showBrand($uuid)
+    {
+        try {
+
+            $brand = Brand::where('uuid', $uuid)->firstOrFail();
+
+        } catch (\Throwable $th) {
+
+            return $this->generalApiResponse(200, [], 'Brand not found');
+
+        }
+
+        return $this->generalApiResponse(200, [$brand]);
     }
 }

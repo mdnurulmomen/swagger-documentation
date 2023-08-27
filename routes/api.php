@@ -27,6 +27,8 @@ Route::prefix('v1')->group(function () {
 
     Route::prefix('/brand')->group(function () {
 
+        Route::get('/{uuid}', [BrandController::class, 'showBrand'])->name('brands.show');
+
         Route::middleware(['auth.jwt'])->group(function () {
 
             Route::post('/create', [BrandController::class, 'storeBrand'])->name('brands.store');

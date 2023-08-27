@@ -775,7 +775,7 @@
                                 ],
                                 "properties": {
                                     "title": {
-                                        "description": "Category Title",
+                                        "description": "Brand Title",
                                         "type": "string"
                                     }
                                 },
@@ -806,6 +806,43 @@
                         "bearerAuth": []
                     }
                 ]
+            }
+        },
+        "/api/v1/brand/{uuid}": {
+            "get": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Fetch a brand",
+                "operationId": "showBrand",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "uuid of expected brand",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Page not found"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    },
+                    "500": {
+                        "description": "Internal Server error"
+                    }
+                }
             }
         },
         "/api/v1/categories": {
