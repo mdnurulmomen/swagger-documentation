@@ -23,6 +23,8 @@ use App\Http\Controllers\API\V1\CategoryController;
 // Brands
 Route::prefix('v1')->group(function () {
 
+    Route::get('/brands', [BrandController::class, 'getBrandList'])->name('brands.index');
+
     Route::prefix('/brand')->group(function () {
 
         Route::middleware(['auth.jwt'])->group(function () {
