@@ -10,6 +10,7 @@ use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -48,6 +49,12 @@ class Handler extends ExceptionHandler
             $this->renderable(function (ValidationException $e, Request $request) {
 
                 return $this->generalApiResponse(422, [], 'Invalid request', $e->errors());
+
+            });
+
+            $this->renderable(function (NotFoundHttpException $e, Request $request) {
+
+                return $this->generalApiResponse(422, [], 'Record not found');
 
             });
 

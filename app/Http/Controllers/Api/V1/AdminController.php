@@ -6,10 +6,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\V1\StoreUserRequest;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Api\V1\UserCollection;
+use App\Http\Requests\Api\V1\StoreUserRequest;
+use App\Http\Requests\Api\V1\UpdateUserRequest;
 
 class AdminController extends Controller
 {
@@ -362,38 +362,11 @@ class AdminController extends Controller
      *     )
      * )
      */
-    public function updateUser($uuid, Request $request)
+    public function updateUser($uuid, UpdateUserRequest $request)
     {
-        try {
+        $user = User::where('uuid', $uuid)->firstOrFail();
 
-            $user = User::where('uuid', $uuid)->firstOrFail();
-
-        } catch (\Throwable $th) {
-
-            return $this->generalApiResponse(200, [], 'User not found');
-
-        }
-
-        $request->merge([
-            'is_marketing' => filter_var($request->is_marketing, FILTER_VALIDATE_BOOLEAN)
-        ]);
-
-        $validator = Validator::make($request->all(), [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,'.$user->id,
-            'password' => 'required|string|min:8|max:255|confirmed',
-            'avatar' => 'nullable|string|max:255',
-            'address' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:255',
-            'is_marketing' => 'nullable|boolean'
-        ]);
-
-        if($validator->fails()){
-            return $this->generalApiResponse(422, [], null, $validator->messages());
-        }
-
-        $user->update($validator->validated());
+        $user->update($request->validated());
 
         return $this->generalApiResponse(200, [$user]);
     }

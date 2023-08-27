@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\V1;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -51,7 +52,15 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $user = $this->guard()->user();
+        if ($this->route()->named('admin.users.update')) {
+
+            $user = User::where('uuid', $this->route('uuid'))->firstOrFail();
+
+        } else {
+
+            $user = $this->guard()->user();
+
+        }
 
         return [
             'first_name' => 'required|string|min:3|max:255',
@@ -62,7 +71,7 @@ class UpdateUserRequest extends FormRequest
             'address' => 'required|string|max:255',
             'phone_number' => 'required|string|max:255',
             'is_marketing' => 'nullable|boolean',
-            'is_admin' => 'nullable|boolean',
+            'is_admin' => 'nullable|boolean'
         ];
     }
 
