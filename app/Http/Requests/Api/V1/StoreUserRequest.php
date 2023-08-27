@@ -23,10 +23,19 @@ class StoreUserRequest extends FormRequest
 
         if ($this->guard()->user()->is_admin) {
 
-            $this->merge([
-                'is_admin' => true
-            ]);
+            if ($this->is_admin) {
 
+                $this->merge([
+                    'is_admin' => filter_var($this->is_admin, FILTER_VALIDATE_BOOLEAN)
+                ]);
+
+            } else {
+
+                $this->merge([
+                    'is_admin' => true
+                ]);
+
+            }
         }
     }
 
