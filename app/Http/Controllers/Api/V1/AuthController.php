@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Api\V1\LoginRequest;
+use App\Http\Requests\Api\V1\ResetTokenRequest;
 
 class AuthController extends Controller
 {
@@ -237,18 +238,8 @@ class AuthController extends Controller
      *      )
      *  )
      */
-    public function getResetToken(Request $request)
+    public function getResetToken(ResetTokenRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|max:255|exists:users,email'
-        ]);
-
-        if($validator->fails()){
-
-            return $this->generalApiResponse(422, [], null, $validator->messages());
-
-        }
-
         return $this->generalApiResponse(200, ['reset_token' => $this->generateToken($request->email)]);
     }
 
