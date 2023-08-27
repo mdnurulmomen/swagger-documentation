@@ -3,10 +3,8 @@
 namespace App\Http\Requests\Api\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Validation\ValidationException;
 
-class CategoryReqest extends FormRequest
+class BrandRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,18 +24,5 @@ class CategoryReqest extends FormRequest
         return [
             'title' => 'required|string|max:255'
         ];
-    }
-
-    protected function failedValidation(Validator $validator) {
-
-        $response = response()->json([
-            'success' => false,
-            'data' => [],
-            'error' => 'Invalid request',
-            'errors' => $validator->errors(),
-            "extra" => []
-        ], 422);
-
-        throw new ValidationException($validator, $response);
     }
 }

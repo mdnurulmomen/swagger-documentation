@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\V1\AuthController;
+use App\Http\Controllers\Api\V1\BrandController;
 use App\Http\Controllers\Api\V1\PostController;
 use App\Http\Controllers\Api\V1\PromotionController;
 use App\Http\Controllers\API\V1\UserController;
@@ -19,6 +20,20 @@ use App\Http\Controllers\API\V1\CategoryController;
 |
 */
 
+// Brands
+Route::prefix('v1')->group(function () {
+
+    Route::prefix('/brand')->group(function () {
+
+        Route::middleware(['auth.jwt'])->group(function () {
+
+            Route::post('/create', [BrandController::class, 'storeBrand'])->name('brands.store');
+
+        });
+    });
+
+});
+
 // Category
 Route::prefix('v1')->group(function () {
 
@@ -28,7 +43,7 @@ Route::prefix('v1')->group(function () {
 
         Route::get('/{uuid}', [CategoryController::class, 'show'])->name('categories.show');
 
-        Route::middleware(['admin'])->group(function () {
+        Route::middleware(['auth.jwt'])->group(function () {
 
             Route::post('/create', [CategoryController::class, 'storeCategory'])->name('categories.store');
             Route::put('/{uuid}', [CategoryController::class, 'updateCategory'])->name('categories.update');
