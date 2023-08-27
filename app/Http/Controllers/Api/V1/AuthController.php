@@ -6,13 +6,13 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Api\V1\LoginRequest;
 use App\Http\Requests\Api\V1\ResetTokenRequest;
+use App\Http\Requests\Api\V1\ResetPasswordRequest;
 
 class AuthController extends Controller
 {
@@ -301,32 +301,13 @@ class AuthController extends Controller
      *      )
      *  )
      */
-    public function resetPassword(Request $request)
+    public function resetPassword(ResetPasswordRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'bail|required|email|max:255|exists:users,email',
-            'password' => 'required|string|min:8|max:255|confirmed',
-            'token' => [
-                'required',
-                'string','max:255',
-                Rule::exists('password_resets', 'token')
-                ->where(function ($query) use ($request) {
-                    return $query->where('email', $request->email);
-                })
-            ]
-        ]);
-
-        if($validator->fails()){
-
-            return $this->generalApiResponse(422, [], null, $validator->messages());
-
-        }
-
         try {
 
             DB::beginTransaction();
 
-            User::firstWhere('email', $request->email)->update($validator->safe()->only(['password']));
+            User::firstWhere('email', $request->email)->update($request->safe()->only(['password']));
 
             $this->deleteExistingRecord($request->email);
 
