@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\Api\V1\LoginRequest;
 
 class AuthController extends Controller
 {
@@ -64,19 +65,8 @@ class AuthController extends Controller
      *      )
      *  )
      */
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|max:255',
-            'password' => 'required|string|max:255',
-        ]);
-
-        if($validator->fails()){
-
-            return $this->generalApiResponse(422, [], null, $validator->messages());
-
-        }
-
         $credentials = $request->only('email', 'password');
 
         if ($request->route()->named('admin.login')) {

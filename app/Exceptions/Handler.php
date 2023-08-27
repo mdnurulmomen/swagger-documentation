@@ -4,10 +4,12 @@ namespace App\Exceptions;
 
 use Throwable;
 use App\Traits\ApiResponser;
+use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -29,17 +31,27 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->renderable(function(TokenInvalidException $e, $request){
-            return $this->generalApiResponse(401, [], "Invalid token", []);
-        });
+        if (request()->is('api/*')) {
 
-        $this->renderable(function (TokenExpiredException $e, $request) {
-            return $this->generalApiResponse(401, [], "Token has Expired", []);
-        });
+            $this->renderable(function(TokenInvalidException $e, $request){
+                return $this->generalApiResponse(401, [], "Invalid token", []);
+            });
 
-        $this->renderable(function (JWTException $e, $request) {
-            return $this->generalApiResponse(401, [], "Unauthorized", []);
-        });
+            $this->renderable(function (TokenExpiredException $e, $request) {
+                return $this->generalApiResponse(401, [], "Token has Expired", []);
+            });
+
+            $this->renderable(function (JWTException $e, $request) {
+                return $this->generalApiResponse(401, [], "Unauthorized", []);
+            });
+
+            $this->renderable(function (ValidationException $e, Request $request) {
+
+                return $this->generalApiResponse(422, [], 'Invalid request', $e->errors());
+
+            });
+
+        }
 
         $this->reportable(function (Throwable $e) {
             //
