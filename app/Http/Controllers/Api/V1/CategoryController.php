@@ -6,8 +6,8 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\CategoryReqest;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Api\V1\CategoryCollection;
 
 class CategoryController extends Controller
@@ -148,17 +148,9 @@ class CategoryController extends Controller
      *      )
      *  )
      */
-    public function storeCategory(Request $request)
+    public function storeCategory(CategoryReqest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255'
-        ]);
-
-        if($validator->fails()){
-            return $this->generalApiResponse(422, [], null, $validator->messages());
-        }
-
-        $inputedDataArray = $validator->validated();
+        $inputedDataArray = $request->validated();
         $inputedDataArray += ['slug' => str_replace(' ', '-', $request->title)];
 
         $newCategory = Category::create($inputedDataArray);
@@ -220,16 +212,8 @@ class CategoryController extends Controller
      *     )
      * )
      */
-    public function updateCategory($uuid, Request $request)
+    public function updateCategory($uuid, CategoryReqest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255'
-        ]);
-
-        if($validator->fails()){
-            return $this->generalApiResponse(422, [], null, $validator->messages());
-        }
-
         try {
 
             $category = Category::where('uuid', $uuid)->firstOrFail();
@@ -240,7 +224,7 @@ class CategoryController extends Controller
 
         }
 
-        $inputedDataArray = $validator->validated();
+        $inputedDataArray = $request->validated();
         $inputedDataArray += ['slug' => str_replace(' ', '-', $request->title)];
 
         $category->update($inputedDataArray);
