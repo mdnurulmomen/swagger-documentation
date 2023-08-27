@@ -73,7 +73,6 @@ Route::name('admin.')->group(function () {
 
 });
 
-
 Route::name('user.')->group(function () {
 
     Route::prefix('v1/user')->group(function () {
