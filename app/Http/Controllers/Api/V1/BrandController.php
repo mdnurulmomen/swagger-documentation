@@ -284,4 +284,59 @@ class BrandController extends Controller
 
         return $this->generalApiResponse(200, [$brand]);
     }
+
+    /**
+     * @OA\Delete(
+     *     path="/api/v1/brand/{uuid}",
+     *     tags={"Brand"},
+     *     summary="Deletes an existing brand",
+     *     operationId="deleteBrand",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="uuid",
+     *         in="path",
+     *         required=true,
+     *         description="uuid of expected user",
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Page not found"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server error"
+     *     )
+     * )
+     */
+    public function deleteBrand($uuid)
+    {
+        try {
+
+            $brand = Brand::where('uuid', $uuid)->firstOrFail();
+
+        } catch (\Throwable $th) {
+
+            return $this->generalApiResponse(200, [], 'Brand not found');
+
+        }
+
+        $brand->delete();
+
+        return $this->generalApiResponse(200);
+    }
 }

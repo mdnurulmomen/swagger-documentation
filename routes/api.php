@@ -33,6 +33,7 @@ Route::prefix('v1')->group(function () {
 
             Route::post('/create', [BrandController::class, 'storeBrand'])->name('brands.store');
             Route::put('/{uuid}', [BrandController::class, 'updateBrand'])->name('brands.update');
+            Route::delete('/{uuid}', [BrandController::class, 'deleteBrand'])->name('brands.destroy');
 
         });
     });
