@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\StoreUserRequest;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Api\V1\UserCollection;
@@ -263,37 +264,9 @@ class AdminController extends Controller
      *      )
      *  )
      */
-    public function storeUser(Request $request)
+    public function storeUser(StoreUserRequest $request)
     {
-        $request->merge([
-            'is_marketing' => filter_var($request->is_marketing, FILTER_VALIDATE_BOOLEAN)
-        ]);
-
-        $validator = Validator::make($request->all(), [
-            'first_name' => 'required|string|min:3|max:255',
-            'last_name' => 'required|string|min:3|max:255',
-            'email' => 'required|email|max:255|unique:users,email',
-            'password' => 'required|string|min:8|max:255|confirmed',
-            'avatar' => 'nullable|string|max:255',
-            'address' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:255',
-            'is_marketing' => 'nullable|boolean'
-        ]);
-
-        if($validator->fails()){
-            return $this->generalApiResponse(422, [], null, $validator->messages());
-        }
-
-        $inputedDataArray = $validator->validated();
-
-
-        if ($this->guard()->user()->is_admin) {
-
-            $inputedDataArray += ['is_admin' => 1];
-
-        }
-
-        $newUser = User::create($inputedDataArray);
+        $newUser = User::create($request->validated());
 
         return $this->generalApiResponse(200, [$newUser]);
     }
