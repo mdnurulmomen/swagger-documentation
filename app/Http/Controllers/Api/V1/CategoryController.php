@@ -6,8 +6,8 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\V1\CategoryReqest;
 use Illuminate\Support\Facades\Schema;
+use App\Http\Requests\Api\V1\CategoryRequest;
 use App\Http\Resources\Api\V1\CategoryCollection;
 
 class CategoryController extends Controller
@@ -148,7 +148,7 @@ class CategoryController extends Controller
      *      )
      *  )
      */
-    public function storeCategory(CategoryReqest $request)
+    public function storeCategory(CategoryRequest $request)
     {
         $inputedDataArray = $request->validated();
         $inputedDataArray += ['slug' => str_replace(' ', '-', $request->title)];
@@ -212,7 +212,7 @@ class CategoryController extends Controller
      *     )
      * )
      */
-    public function updateCategory($uuid, CategoryReqest $request)
+    public function updateCategory($uuid, CategoryRequest $request)
     {
         try {
 
