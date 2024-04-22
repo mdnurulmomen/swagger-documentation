@@ -13,7 +13,7 @@ trait ApiResponser{
     protected function generalApiResponse($code = 200, $data = [], $error = null, $errors = [])
 	{
         return response()->json([
-            'success' => $code==200 ? true : false,
+            'success' => $code===200 ? true : false,
             'data' => $data,
             'error' => $error,
             'errors' => $errors,
